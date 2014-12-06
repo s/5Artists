@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="bCW-QT-2Si">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <scenes>
+        <!--Today View Controller-->
+        <scene sceneID="Bez-Hr-d5Q">
+            <objects>
+                <viewController id="bCW-QT-2Si" customClass="TodayViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Qv0-bY-8x7"/>
+                        <viewControllerLayoutGuide type="bottom" id="bbc-4W-1tw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleAspectFit" verticalHuggingPriority="1000" id="fye-mz-j39">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aNh-bQ-DUZ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
+                                <subviews>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please login with Spotify to see suggestions" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOU-Ys-OlN">
+                                        <rect key="frame" x="60" y="172" width="200" height="56"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="56" id="7cb-TN-0Eg"/>
+                                            <constraint firstAttribute="width" constant="200" id="MQA-pK-o1p"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="NOU-Ys-OlN" secondAttribute="centerX" id="bFf-R7-MqF"/>
+                                    <constraint firstAttribute="centerY" secondItem="NOU-Ys-OlN" secondAttribute="centerY" id="mEn-GY-kAP"/>
+                                </constraints>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EIk-1E-uBK">
+                                <rect key="frame" x="60" y="20" width="200" height="200"/>
+                                <color key="backgroundColor" red="0.31999373435974121" green="0.25245338678359985" blue="0.24830383062362671" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="8g5-Lr-BpA"/>
+                                    <constraint firstAttribute="height" priority="999" constant="200" id="Fc2-FP-G8J"/>
+                                    <constraint firstAttribute="width" secondItem="EIk-1E-uBK" secondAttribute="height" multiplier="1:1" id="X0h-bh-OfT"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qsb-Yn-KGP">
+                                <rect key="frame" x="20" y="106" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="16r-y7-8YH"/>
+                                    <constraint firstAttribute="width" constant="30" id="EPP-aI-8gE"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="back-100.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="previousArtist:" destination="bCW-QT-2Si" eventType="touchUpInside" id="rLS-zF-T8L"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="02l-LT-KEd">
+                                <rect key="frame" x="274" y="106" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Lh5-yj-vo5"/>
+                                    <constraint firstAttribute="width" constant="30" id="zuy-Fh-062"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="forward-100.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="nextArtist:" destination="bCW-QT-2Si" eventType="touchUpInside" id="eYp-Xb-yHL"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="mGT-SK-P2g">
+                                <rect key="frame" x="60" y="228" width="200" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="c8D-jw-vJ0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rij-MG-qwh">
+                                <rect key="frame" x="88" y="266" width="144" height="27"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="27" id="QLH-IA-YsK"/>
+                                    <constraint firstAttribute="width" constant="144" id="S6N-Be-5KS"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="listen_on_spotify-green.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="listenOnSpotify:" destination="bCW-QT-2Si" eventType="touchUpInside" id="IL7-Ng-ThK"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="5Gk-wn-OfI">
+                                <rect key="frame" x="150" y="106" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="7ZC-Q4-weq"/>
+                                    <constraint firstAttribute="height" constant="20" id="k3g-qm-c6E"/>
+                                </constraints>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mGT-SK-P2g" firstAttribute="centerX" secondItem="rij-MG-qwh" secondAttribute="centerX" id="6OA-c9-xG7"/>
+                            <constraint firstItem="EIk-1E-uBK" firstAttribute="centerY" secondItem="02l-LT-KEd" secondAttribute="centerY" constant="-1" id="6Xb-oa-8pz"/>
+                            <constraint firstItem="EIk-1E-uBK" firstAttribute="width" secondItem="fye-mz-j39" secondAttribute="width" multiplier="0.625" id="8iO-1l-Wpk"/>
+                            <constraint firstItem="aNh-bQ-DUZ" firstAttribute="top" secondItem="Qv0-bY-8x7" secondAttribute="bottom" id="ML3-tb-B2c"/>
+                            <constraint firstItem="5Gk-wn-OfI" firstAttribute="centerY" secondItem="EIk-1E-uBK" secondAttribute="centerY" constant="-4" id="Q9O-72-TVS"/>
+                            <constraint firstItem="EIk-1E-uBK" firstAttribute="leading" secondItem="mGT-SK-P2g" secondAttribute="leading" id="Vz7-mm-9Ge"/>
+                            <constraint firstItem="mGT-SK-P2g" firstAttribute="top" secondItem="EIk-1E-uBK" secondAttribute="bottom" constant="8" id="Yxi-hi-QW2"/>
+                            <constraint firstItem="02l-LT-KEd" firstAttribute="leading" secondItem="EIk-1E-uBK" secondAttribute="trailing" constant="14" id="gWv-jc-w0d"/>
+                            <constraint firstAttribute="trailing" secondItem="aNh-bQ-DUZ" secondAttribute="trailing" id="hM4-Ww-uvy"/>
+                            <constraint firstItem="rij-MG-qwh" firstAttribute="top" secondItem="mGT-SK-P2g" secondAttribute="bottom" constant="8" id="ihs-Ne-Jkf"/>
+                            <constraint firstItem="5Gk-wn-OfI" firstAttribute="centerX" secondItem="EIk-1E-uBK" secondAttribute="centerX" id="kN9-fd-te4"/>
+                            <constraint firstItem="EIk-1E-uBK" firstAttribute="trailing" secondItem="mGT-SK-P2g" secondAttribute="trailing" id="kve-WQ-hUc"/>
+                            <constraint firstItem="EIk-1E-uBK" firstAttribute="top" secondItem="Qv0-bY-8x7" secondAttribute="bottom" constant="20" id="mMa-4k-zOB"/>
+                            <constraint firstItem="EIk-1E-uBK" firstAttribute="leading" secondItem="Qsb-Yn-KGP" secondAttribute="trailing" constant="10" id="oaw-3B-eDp"/>
+                            <constraint firstAttribute="centerX" secondItem="EIk-1E-uBK" secondAttribute="centerX" id="sNT-oo-6Mh"/>
+                            <constraint firstItem="aNh-bQ-DUZ" firstAttribute="leading" secondItem="fye-mz-j39" secondAttribute="leading" id="vDI-wh-ZXG"/>
+                            <constraint firstItem="EIk-1E-uBK" firstAttribute="centerY" secondItem="Qsb-Yn-KGP" secondAttribute="centerY" constant="-1" id="vEr-hW-ZVh"/>
+                            <constraint firstItem="bbc-4W-1tw" firstAttribute="top" secondItem="aNh-bQ-DUZ" secondAttribute="bottom" id="zvW-VM-uln"/>
+                        </constraints>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="320" height="300"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="400"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="5Gk-wn-OfI" id="kba-9f-kpN"/>
+                        <outlet property="artistNameAndListenerCount" destination="mGT-SK-P2g" id="yo3-HA-0p1"/>
+                        <outlet property="artistPhoto" destination="EIk-1E-uBK" id="3fo-Vz-pvl"/>
+                        <outlet property="listenOnSpotifyButton" destination="rij-MG-qwh" id="ojI-uV-qNI"/>
+                        <outlet property="noResultsLabel" destination="NOU-Ys-OlN" id="Zyg-E3-uch"/>
+                        <outlet property="noResultsView" destination="aNh-bQ-DUZ" id="Txt-ft-rRw"/>
+                        <outlet property="normalView" destination="fye-mz-j39" id="ywc-mD-3r3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8dG-Uk-Mnv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-919" y="346"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="back-100.png" width="100" height="100"/>
+        <image name="forward-100.png" width="100" height="100"/>
+        <image name="listen_on_spotify-green.png" width="463" height="88"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

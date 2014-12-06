@@ -1,0 +1,870 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F50A916E1A27F80300D3146D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F50A916D1A27F80300D3146D /* main.m */; };
+		F50A91711A27F80300D3146D /* TWLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F50A91701A27F80300D3146D /* TWLAppDelegate.m */; };
+		F50A91741A27F80300D3146D /* TWLLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50A91731A27F80300D3146D /* TWLLoginViewController.m */; };
+		F50A91791A27F80300D3146D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F50A91781A27F80300D3146D /* Images.xcassets */; };
+		F50A91881A27F80300D3146D /* _ArtistsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F50A91871A27F80300D3146D /* _ArtistsTests.m */; };
+		F50A91921A27F84600D3146D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F50A91911A27F84600D3146D /* AVFoundation.framework */; };
+		F50A91971A27F8B400D3146D /* TWLHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50A91961A27F8B400D3146D /* TWLHomeViewController.m */; };
+		F50A91991A27FAE400D3146D /* log_in-mobile.png in Resources */ = {isa = PBXBuildFile; fileRef = F50A91981A27FAE400D3146D /* log_in-mobile.png */; };
+		F50A91D01A280C8E00D3146D /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F50A91A01A28029C00D3146D /* NotificationCenter.framework */; };
+		F50A91D81A280C8E00D3146D /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F50A91D71A280C8E00D3146D /* MainInterface.storyboard */; };
+		F50A91DB1A280C8E00D3146D /* 5ArtistsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F50A91CF1A280C8E00D3146D /* 5ArtistsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F545AF491A33570400E5C5FA /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F545AF481A33570400E5C5FA /* Spotify.framework */; };
+		F545AF4D1A33580B00E5C5FA /* CredentialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F545AF4C1A33580B00E5C5FA /* CredentialManager.m */; };
+		F545AF4F1A3358E100E5C5FA /* SpotifyKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F545AF4E1A3358E100E5C5FA /* SpotifyKeys.plist */; };
+		F545AF531A335ACD00E5C5FA /* 5Artists.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F545AF511A335ACD00E5C5FA /* 5Artists.xcdatamodeld */; };
+		F545AF601A33608A00E5C5FA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F545AF5E1A33608A00E5C5FA /* LaunchScreen.xib */; };
+		F545AF611A33608A00E5C5FA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F545AF5F1A33608A00E5C5FA /* Main.storyboard */; };
+		F5834D711A2F785A00B4CF7C /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = F5834D701A2F785A00B4CF7C /* exit.png */; };
+		F587E13D1A2E6C5A00803702 /* 5Artists.png in Resources */ = {isa = PBXBuildFile; fileRef = F587E13C1A2E6C5A00803702 /* 5Artists.png */; };
+		F587E1611A2E958D00803702 /* back-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A3FD1A2828BC00359A22 /* back-100.png */; };
+		F587E1621A2E958D00803702 /* forward-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A3FE1A2828BC00359A22 /* forward-100.png */; };
+		F587E1631A2E958D00803702 /* listen_on_spotify-green.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A3FB1A28260800359A22 /* listen_on_spotify-green.png */; };
+		F5B1A3A91A2811F900359A22 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B1A3A81A2811F900359A22 /* TodayViewController.m */; };
+		F5B1A3FC1A28260800359A22 /* listen_on_spotify-green.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A3FB1A28260800359A22 /* listen_on_spotify-green.png */; };
+		F5B1A3FF1A2828BC00359A22 /* back-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A3FD1A2828BC00359A22 /* back-100.png */; };
+		F5B1A4001A2828BC00359A22 /* forward-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A3FE1A2828BC00359A22 /* forward-100.png */; };
+		F5B1A4061A282F9D00359A22 /* bandofhorses.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A4011A282F9D00359A22 /* bandofhorses.jpg */; };
+		F5B1A4071A282F9D00359A22 /* beirut.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A4021A282F9D00359A22 /* beirut.jpg */; };
+		F5B1A4081A282F9D00359A22 /* firstaidkit.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A4031A282F9D00359A22 /* firstaidkit.jpg */; };
+		F5B1A4091A282F9D00359A22 /* imaginedragons.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A4041A282F9D00359A22 /* imaginedragons.jpg */; };
+		F5B1A40A1A282F9D00359A22 /* lorde.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A4051A282F9D00359A22 /* lorde.jpg */; };
+		F5FF7AA11A2C902D002B0CE7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FF7AA01A2C902D002B0CE7 /* CoreData.framework */; };
+		F5FF7AA91A2C9382002B0CE7 /* TWLDailyArtists.m in Sources */ = {isa = PBXBuildFile; fileRef = F5FF7AA81A2C9382002B0CE7 /* TWLDailyArtists.m */; };
+		F5FF7AAD1A2C9470002B0CE7 /* TWLDailyArtists+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = F5FF7AAC1A2C9470002B0CE7 /* TWLDailyArtists+Create.m */; };
+		F5FF7AB11A2C9B7F002B0CE7 /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F5FF7AB01A2C9B7F002B0CE7 /* CoreDataStack.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F50A91821A27F80300D3146D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F50A91601A27F80300D3146D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F50A91671A27F80300D3146D;
+			remoteInfo = 5Artists;
+		};
+		F50A91D91A280C8E00D3146D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F50A91601A27F80300D3146D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F50A91CE1A280C8E00D3146D;
+			remoteInfo = 5ArtistsExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F50A91B01A28029C00D3146D /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F50A91DB1A280C8E00D3146D /* 5ArtistsExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		F50A91681A27F80300D3146D /* 5Artists.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 5Artists.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F50A916C1A27F80300D3146D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Supporting Files/Info.plist"; sourceTree = "<group>"; };
+		F50A916D1A27F80300D3146D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Classes/main.m; sourceTree = "<group>"; };
+		F50A916F1A27F80300D3146D /* TWLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TWLAppDelegate.h; path = Classes/Delegate/TWLAppDelegate.h; sourceTree = "<group>"; };
+		F50A91701A27F80300D3146D /* TWLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TWLAppDelegate.m; path = Classes/Delegate/TWLAppDelegate.m; sourceTree = "<group>"; };
+		F50A91721A27F80300D3146D /* TWLLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TWLLoginViewController.h; path = Classes/Login/TWLLoginViewController.h; sourceTree = "<group>"; };
+		F50A91731A27F80300D3146D /* TWLLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TWLLoginViewController.m; path = Classes/Login/TWLLoginViewController.m; sourceTree = "<group>"; };
+		F50A91781A27F80300D3146D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Supporting Files/Images.xcassets"; sourceTree = "<group>"; };
+		F50A91811A27F80300D3146D /* 5ArtistsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 5ArtistsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F50A91861A27F80300D3146D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F50A91871A27F80300D3146D /* _ArtistsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _ArtistsTests.m; sourceTree = "<group>"; };
+		F50A91911A27F84600D3146D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		F50A91951A27F8B400D3146D /* TWLHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TWLHomeViewController.h; path = Classes/Home/TWLHomeViewController.h; sourceTree = "<group>"; };
+		F50A91961A27F8B400D3146D /* TWLHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TWLHomeViewController.m; path = Classes/Home/TWLHomeViewController.m; sourceTree = "<group>"; };
+		F50A91981A27FAE400D3146D /* log_in-mobile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "log_in-mobile.png"; path = "Assets/Images/log_in-mobile.png"; sourceTree = "<group>"; };
+		F50A91A01A28029C00D3146D /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		F50A91CF1A280C8E00D3146D /* 5ArtistsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = 5ArtistsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F50A91D31A280C8E00D3146D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F50A91D71A280C8E00D3146D /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
+		F545AF481A33570400E5C5FA /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
+		F545AF4B1A33580B00E5C5FA /* CredentialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CredentialManager.h; path = Classes/CredentialManager/CredentialManager.h; sourceTree = "<group>"; };
+		F545AF4C1A33580B00E5C5FA /* CredentialManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CredentialManager.m; path = Classes/CredentialManager/CredentialManager.m; sourceTree = "<group>"; };
+		F545AF4E1A3358E100E5C5FA /* SpotifyKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = SpotifyKeys.plist; path = "Supporting Files/SpotifyKeys.plist"; sourceTree = "<group>"; };
+		F545AF521A335ACD00E5C5FA /* 5Artists.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = 5Artists.xcdatamodel; sourceTree = "<group>"; };
+		F545AF5E1A33608A00E5C5FA /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = "Supporting Files/Base.lproj/LaunchScreen.xib"; sourceTree = "<group>"; };
+		F545AF5F1A33608A00E5C5FA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = "Supporting Files/Base.lproj/Main.storyboard"; sourceTree = "<group>"; };
+		F5834D701A2F785A00B4CF7C /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exit.png; path = Assets/Images/exit.png; sourceTree = "<group>"; };
+		F587E13C1A2E6C5A00803702 /* 5Artists.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 5Artists.png; path = Assets/Images/5Artists.png; sourceTree = "<group>"; };
+		F5B1A3A71A2811F900359A22 /* TodayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
+		F5B1A3A81A2811F900359A22 /* TodayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
+		F5B1A3AE1A28198A00359A22 /* 5Artists.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = 5Artists.entitlements; path = "Supporting Files/5Artists.entitlements"; sourceTree = "<group>"; };
+		F5B1A3AF1A2819A300359A22 /* 5ArtistsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = 5ArtistsExtension.entitlements; sourceTree = "<group>"; };
+		F5B1A3FB1A28260800359A22 /* listen_on_spotify-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "listen_on_spotify-green.png"; sourceTree = "<group>"; };
+		F5B1A3FD1A2828BC00359A22 /* back-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-100.png"; sourceTree = "<group>"; };
+		F5B1A3FE1A2828BC00359A22 /* forward-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "forward-100.png"; sourceTree = "<group>"; };
+		F5B1A4011A282F9D00359A22 /* bandofhorses.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bandofhorses.jpg; sourceTree = "<group>"; };
+		F5B1A4021A282F9D00359A22 /* beirut.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beirut.jpg; sourceTree = "<group>"; };
+		F5B1A4031A282F9D00359A22 /* firstaidkit.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = firstaidkit.jpg; sourceTree = "<group>"; };
+		F5B1A4041A282F9D00359A22 /* imaginedragons.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = imaginedragons.jpg; sourceTree = "<group>"; };
+		F5B1A4051A282F9D00359A22 /* lorde.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lorde.jpg; sourceTree = "<group>"; };
+		F5FF7AA01A2C902D002B0CE7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		F5FF7AA71A2C9382002B0CE7 /* TWLDailyArtists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TWLDailyArtists.h; path = Classes/CoreData/DailyArtistsModel/TWLDailyArtists.h; sourceTree = "<group>"; };
+		F5FF7AA81A2C9382002B0CE7 /* TWLDailyArtists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TWLDailyArtists.m; path = Classes/CoreData/DailyArtistsModel/TWLDailyArtists.m; sourceTree = "<group>"; };
+		F5FF7AAB1A2C9470002B0CE7 /* TWLDailyArtists+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TWLDailyArtists+Create.h"; path = "Classes/CoreData/DailyArtists Category/TWLDailyArtists+Create.h"; sourceTree = "<group>"; };
+		F5FF7AAC1A2C9470002B0CE7 /* TWLDailyArtists+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TWLDailyArtists+Create.m"; path = "Classes/CoreData/DailyArtists Category/TWLDailyArtists+Create.m"; sourceTree = "<group>"; };
+		F5FF7AAF1A2C9B7F002B0CE7 /* CoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreDataStack.h; path = Classes/CoreData/CoreDataStack/CoreDataStack.h; sourceTree = "<group>"; };
+		F5FF7AB01A2C9B7F002B0CE7 /* CoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CoreDataStack.m; path = Classes/CoreData/CoreDataStack/CoreDataStack.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F50A91651A27F80300D3146D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5FF7AA11A2C902D002B0CE7 /* CoreData.framework in Frameworks */,
+				F545AF491A33570400E5C5FA /* Spotify.framework in Frameworks */,
+				F50A91921A27F84600D3146D /* AVFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F50A917E1A27F80300D3146D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F50A91CC1A280C8E00D3146D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F50A91D01A280C8E00D3146D /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		911BD7B3187FCC9A4C5E4BD4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F50A915F1A27F80300D3146D = {
+			isa = PBXGroup;
+			children = (
+				F50A916A1A27F80300D3146D /* 5Artists */,
+				F50A91841A27F80300D3146D /* 5ArtistsTests */,
+				F50A91D11A280C8E00D3146D /* 5ArtistsExtension */,
+				F50A919F1A28029C00D3146D /* Frameworks */,
+				F50A91691A27F80300D3146D /* Products */,
+				911BD7B3187FCC9A4C5E4BD4 /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		F50A91691A27F80300D3146D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F50A91681A27F80300D3146D /* 5Artists.app */,
+				F50A91811A27F80300D3146D /* 5ArtistsTests.xctest */,
+				F50A91CF1A280C8E00D3146D /* 5ArtistsExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F50A916A1A27F80300D3146D /* 5Artists */ = {
+			isa = PBXGroup;
+			children = (
+				F5B1A4111A28AFCF00359A22 /* Frameworks */,
+				F5B1A40C1A28AF9700359A22 /* Assets */,
+				F5B1A40B1A28AF8700359A22 /* Classes */,
+				F50A916B1A27F80300D3146D /* Supporting Files */,
+			);
+			path = 5Artists;
+			sourceTree = "<group>";
+		};
+		F50A916B1A27F80300D3146D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F545AF5E1A33608A00E5C5FA /* LaunchScreen.xib */,
+				F545AF5F1A33608A00E5C5FA /* Main.storyboard */,
+				F545AF4E1A3358E100E5C5FA /* SpotifyKeys.plist */,
+				F50A91781A27F80300D3146D /* Images.xcassets */,
+				F5B1A3AE1A28198A00359A22 /* 5Artists.entitlements */,
+				F50A916C1A27F80300D3146D /* Info.plist */,
+				F50A916D1A27F80300D3146D /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F50A91841A27F80300D3146D /* 5ArtistsTests */ = {
+			isa = PBXGroup;
+			children = (
+				F50A91871A27F80300D3146D /* _ArtistsTests.m */,
+				F50A91851A27F80300D3146D /* Supporting Files */,
+			);
+			path = 5ArtistsTests;
+			sourceTree = "<group>";
+		};
+		F50A91851A27F80300D3146D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F50A91861A27F80300D3146D /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F50A919F1A28029C00D3146D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F5FF7AA01A2C902D002B0CE7 /* CoreData.framework */,
+				F50A91A01A28029C00D3146D /* NotificationCenter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F50A91D11A280C8E00D3146D /* 5ArtistsExtension */ = {
+			isa = PBXGroup;
+			children = (
+				F5B1A4141A28B00F00359A22 /* Classes */,
+				F5B1A4121A28AFF500359A22 /* Assets */,
+				F50A91D21A280C8E00D3146D /* Supporting Files */,
+			);
+			path = 5ArtistsExtension;
+			sourceTree = "<group>";
+		};
+		F50A91D21A280C8E00D3146D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F5B1A3AF1A2819A300359A22 /* 5ArtistsExtension.entitlements */,
+				F50A91D71A280C8E00D3146D /* MainInterface.storyboard */,
+				F50A91D31A280C8E00D3146D /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F545AF4A1A3357B700E5C5FA /* CredentialManager */ = {
+			isa = PBXGroup;
+			children = (
+				F545AF4B1A33580B00E5C5FA /* CredentialManager.h */,
+				F545AF4C1A33580B00E5C5FA /* CredentialManager.m */,
+			);
+			name = CredentialManager;
+			sourceTree = "<group>";
+		};
+		F5B1A40B1A28AF8700359A22 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F545AF4A1A3357B700E5C5FA /* CredentialManager */,
+				F5FF7AAE1A2C9B18002B0CE7 /* CoreData Stack */,
+				F5FF7AAA1A2C9422002B0CE7 /* DailyArtists Category */,
+				F5FF7AA61A2C92CB002B0CE7 /* DailyArtists Model */,
+				F5FF7AA51A2C9112002B0CE7 /* Model */,
+				F5B1A4101A28AFBE00359A22 /* Login */,
+				F5B1A40F1A28AFB600359A22 /* Home */,
+				F5B1A40E1A28AFA900359A22 /* Delegate */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		F5B1A40C1A28AF9700359A22 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				F5B1A40D1A28AF9C00359A22 /* Images */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		F5B1A40D1A28AF9C00359A22 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				F5834D701A2F785A00B4CF7C /* exit.png */,
+				F587E13C1A2E6C5A00803702 /* 5Artists.png */,
+				F50A91981A27FAE400D3146D /* log_in-mobile.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		F5B1A40E1A28AFA900359A22 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				F50A916F1A27F80300D3146D /* TWLAppDelegate.h */,
+				F50A91701A27F80300D3146D /* TWLAppDelegate.m */,
+			);
+			name = Delegate;
+			sourceTree = "<group>";
+		};
+		F5B1A40F1A28AFB600359A22 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				F50A91951A27F8B400D3146D /* TWLHomeViewController.h */,
+				F50A91961A27F8B400D3146D /* TWLHomeViewController.m */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		F5B1A4101A28AFBE00359A22 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				F50A91721A27F80300D3146D /* TWLLoginViewController.h */,
+				F50A91731A27F80300D3146D /* TWLLoginViewController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		F5B1A4111A28AFCF00359A22 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F545AF481A33570400E5C5FA /* Spotify.framework */,
+				F50A91911A27F84600D3146D /* AVFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F5B1A4121A28AFF500359A22 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				F5B1A4131A28AFFD00359A22 /* Images */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		F5B1A4131A28AFFD00359A22 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				F5B1A4011A282F9D00359A22 /* bandofhorses.jpg */,
+				F5B1A4021A282F9D00359A22 /* beirut.jpg */,
+				F5B1A4031A282F9D00359A22 /* firstaidkit.jpg */,
+				F5B1A4041A282F9D00359A22 /* imaginedragons.jpg */,
+				F5B1A4051A282F9D00359A22 /* lorde.jpg */,
+				F5B1A3FD1A2828BC00359A22 /* back-100.png */,
+				F5B1A3FE1A2828BC00359A22 /* forward-100.png */,
+				F5B1A3FB1A28260800359A22 /* listen_on_spotify-green.png */,
+			);
+			name = Images;
+			path = Assets/Images;
+			sourceTree = "<group>";
+		};
+		F5B1A4141A28B00F00359A22 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F5B1A4151A28B01300359A22 /* Today */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		F5B1A4151A28B01300359A22 /* Today */ = {
+			isa = PBXGroup;
+			children = (
+				F5B1A3A71A2811F900359A22 /* TodayViewController.h */,
+				F5B1A3A81A2811F900359A22 /* TodayViewController.m */,
+			);
+			name = Today;
+			path = Classes/Today;
+			sourceTree = "<group>";
+		};
+		F5FF7AA51A2C9112002B0CE7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F545AF511A335ACD00E5C5FA /* 5Artists.xcdatamodeld */,
+			);
+			name = Model;
+			path = Classes/CoreData/Model;
+			sourceTree = "<group>";
+		};
+		F5FF7AA61A2C92CB002B0CE7 /* DailyArtists Model */ = {
+			isa = PBXGroup;
+			children = (
+				F5FF7AA71A2C9382002B0CE7 /* TWLDailyArtists.h */,
+				F5FF7AA81A2C9382002B0CE7 /* TWLDailyArtists.m */,
+			);
+			name = "DailyArtists Model";
+			sourceTree = "<group>";
+		};
+		F5FF7AAA1A2C9422002B0CE7 /* DailyArtists Category */ = {
+			isa = PBXGroup;
+			children = (
+				F5FF7AAB1A2C9470002B0CE7 /* TWLDailyArtists+Create.h */,
+				F5FF7AAC1A2C9470002B0CE7 /* TWLDailyArtists+Create.m */,
+			);
+			name = "DailyArtists Category";
+			sourceTree = "<group>";
+		};
+		F5FF7AAE1A2C9B18002B0CE7 /* CoreData Stack */ = {
+			isa = PBXGroup;
+			children = (
+				F5FF7AAF1A2C9B7F002B0CE7 /* CoreDataStack.h */,
+				F5FF7AB01A2C9B7F002B0CE7 /* CoreDataStack.m */,
+			);
+			name = "CoreData Stack";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F50A91671A27F80300D3146D /* 5Artists */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F50A918B1A27F80300D3146D /* Build configuration list for PBXNativeTarget "5Artists" */;
+			buildPhases = (
+				F50A91641A27F80300D3146D /* Sources */,
+				F50A91651A27F80300D3146D /* Frameworks */,
+				F50A91661A27F80300D3146D /* Resources */,
+				F50A91B01A28029C00D3146D /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F50A91DA1A280C8E00D3146D /* PBXTargetDependency */,
+			);
+			name = 5Artists;
+			productName = 5Artists;
+			productReference = F50A91681A27F80300D3146D /* 5Artists.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F50A91801A27F80300D3146D /* 5ArtistsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F50A918E1A27F80300D3146D /* Build configuration list for PBXNativeTarget "5ArtistsTests" */;
+			buildPhases = (
+				F50A917D1A27F80300D3146D /* Sources */,
+				F50A917E1A27F80300D3146D /* Frameworks */,
+				F50A917F1A27F80300D3146D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F50A91831A27F80300D3146D /* PBXTargetDependency */,
+			);
+			name = 5ArtistsTests;
+			productName = 5ArtistsTests;
+			productReference = F50A91811A27F80300D3146D /* 5ArtistsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F50A91CE1A280C8E00D3146D /* 5ArtistsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F50A91DC1A280C8E00D3146D /* Build configuration list for PBXNativeTarget "5ArtistsExtension" */;
+			buildPhases = (
+				F50A91CB1A280C8E00D3146D /* Sources */,
+				F50A91CC1A280C8E00D3146D /* Frameworks */,
+				F50A91CD1A280C8E00D3146D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = 5ArtistsExtension;
+			productName = 5ArtistsExtension;
+			productReference = F50A91CF1A280C8E00D3146D /* 5ArtistsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F50A91601A27F80300D3146D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Tower Labs.";
+				TargetAttributes = {
+					F50A91671A27F80300D3146D = {
+						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = 9JJNZLTAH9;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					F50A91801A27F80300D3146D = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = F50A91671A27F80300D3146D;
+					};
+					F50A91CE1A280C8E00D3146D = {
+						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = 9JJNZLTAH9;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = F50A91631A27F80300D3146D /* Build configuration list for PBXProject "5Artists" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F50A915F1A27F80300D3146D;
+			productRefGroup = F50A91691A27F80300D3146D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F50A91671A27F80300D3146D /* 5Artists */,
+				F50A91801A27F80300D3146D /* 5ArtistsTests */,
+				F50A91CE1A280C8E00D3146D /* 5ArtistsExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F50A91661A27F80300D3146D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F587E1611A2E958D00803702 /* back-100.png in Resources */,
+				F545AF611A33608A00E5C5FA /* Main.storyboard in Resources */,
+				F5834D711A2F785A00B4CF7C /* exit.png in Resources */,
+				F587E1621A2E958D00803702 /* forward-100.png in Resources */,
+				F587E1631A2E958D00803702 /* listen_on_spotify-green.png in Resources */,
+				F50A91991A27FAE400D3146D /* log_in-mobile.png in Resources */,
+				F587E13D1A2E6C5A00803702 /* 5Artists.png in Resources */,
+				F50A91791A27F80300D3146D /* Images.xcassets in Resources */,
+				F545AF601A33608A00E5C5FA /* LaunchScreen.xib in Resources */,
+				F545AF4F1A3358E100E5C5FA /* SpotifyKeys.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F50A917F1A27F80300D3146D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F50A91CD1A280C8E00D3146D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5B1A4061A282F9D00359A22 /* bandofhorses.jpg in Resources */,
+				F50A91D81A280C8E00D3146D /* MainInterface.storyboard in Resources */,
+				F5B1A4001A2828BC00359A22 /* forward-100.png in Resources */,
+				F5B1A40A1A282F9D00359A22 /* lorde.jpg in Resources */,
+				F5B1A4091A282F9D00359A22 /* imaginedragons.jpg in Resources */,
+				F5B1A4081A282F9D00359A22 /* firstaidkit.jpg in Resources */,
+				F5B1A3FF1A2828BC00359A22 /* back-100.png in Resources */,
+				F5B1A3FC1A28260800359A22 /* listen_on_spotify-green.png in Resources */,
+				F5B1A4071A282F9D00359A22 /* beirut.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F50A91641A27F80300D3146D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F545AF531A335ACD00E5C5FA /* 5Artists.xcdatamodeld in Sources */,
+				F5FF7AA91A2C9382002B0CE7 /* TWLDailyArtists.m in Sources */,
+				F545AF4D1A33580B00E5C5FA /* CredentialManager.m in Sources */,
+				F50A91741A27F80300D3146D /* TWLLoginViewController.m in Sources */,
+				F50A91971A27F8B400D3146D /* TWLHomeViewController.m in Sources */,
+				F50A91711A27F80300D3146D /* TWLAppDelegate.m in Sources */,
+				F5FF7AAD1A2C9470002B0CE7 /* TWLDailyArtists+Create.m in Sources */,
+				F50A916E1A27F80300D3146D /* main.m in Sources */,
+				F5FF7AB11A2C9B7F002B0CE7 /* CoreDataStack.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F50A917D1A27F80300D3146D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F50A91881A27F80300D3146D /* _ArtistsTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F50A91CB1A280C8E00D3146D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5B1A3A91A2811F900359A22 /* TodayViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F50A91831A27F80300D3146D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F50A91671A27F80300D3146D /* 5Artists */;
+			targetProxy = F50A91821A27F80300D3146D /* PBXContainerItemProxy */;
+		};
+		F50A91DA1A280C8E00D3146D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F50A91CE1A280C8E00D3146D /* 5ArtistsExtension */;
+			targetProxy = F50A91D91A280C8E00D3146D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		F50A91891A27F80300D3146D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		F50A918A1A27F80300D3146D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F50A918C1A27F80300D3146D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "5Artists/Supporting Files/5Artists.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/5Artists",
+					"/Users/ozcan/Downloads/ios-sdk-master",
+					"$(PROJECT_DIR)/5Artists/Frameworks",
+				);
+				INFOPLIST_FILE = "5Artists/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		F50A918D1A27F80300D3146D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "5Artists/Supporting Files/5Artists.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/5Artists",
+					"/Users/ozcan/Downloads/ios-sdk-master",
+					"$(PROJECT_DIR)/5Artists/Frameworks",
+				);
+				INFOPLIST_FILE = "5Artists/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+		F50A918F1A27F80300D3146D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = 5ArtistsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/5Artists.app/5Artists";
+			};
+			name = Debug;
+		};
+		F50A91901A27F80300D3146D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = 5ArtistsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/5Artists.app/5Artists";
+			};
+			name = Release;
+		};
+		F50A91DD1A280C8E00D3146D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = 5ArtistsExtension/5ArtistsExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = 5ArtistsExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		F50A91DE1A280C8E00D3146D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = 5ArtistsExtension/5ArtistsExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = 5ArtistsExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F50A91631A27F80300D3146D /* Build configuration list for PBXProject "5Artists" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F50A91891A27F80300D3146D /* Debug */,
+				F50A918A1A27F80300D3146D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F50A918B1A27F80300D3146D /* Build configuration list for PBXNativeTarget "5Artists" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F50A918C1A27F80300D3146D /* Debug */,
+				F50A918D1A27F80300D3146D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F50A918E1A27F80300D3146D /* Build configuration list for PBXNativeTarget "5ArtistsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F50A918F1A27F80300D3146D /* Debug */,
+				F50A91901A27F80300D3146D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F50A91DC1A280C8E00D3146D /* Build configuration list for PBXNativeTarget "5ArtistsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F50A91DD1A280C8E00D3146D /* Debug */,
+				F50A91DE1A280C8E00D3146D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F545AF511A335ACD00E5C5FA /* 5Artists.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F545AF521A335ACD00E5C5FA /* 5Artists.xcdatamodel */,
+			);
+			currentVersion = F545AF521A335ACD00E5C5FA /* 5Artists.xcdatamodel */;
+			path = 5Artists.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = F50A91601A27F80300D3146D /* Project object */;
+}
