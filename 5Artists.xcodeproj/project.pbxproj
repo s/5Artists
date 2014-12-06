@@ -20,10 +20,10 @@
 		F50A91DB1A280C8E00D3146D /* 5ArtistsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F50A91CF1A280C8E00D3146D /* 5ArtistsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F545AF491A33570400E5C5FA /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F545AF481A33570400E5C5FA /* Spotify.framework */; };
 		F545AF4D1A33580B00E5C5FA /* CredentialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F545AF4C1A33580B00E5C5FA /* CredentialManager.m */; };
-		F545AF4F1A3358E100E5C5FA /* SpotifyKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F545AF4E1A3358E100E5C5FA /* SpotifyKeys.plist */; };
 		F545AF531A335ACD00E5C5FA /* 5Artists.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F545AF511A335ACD00E5C5FA /* 5Artists.xcdatamodeld */; };
 		F545AF601A33608A00E5C5FA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F545AF5E1A33608A00E5C5FA /* LaunchScreen.xib */; };
 		F545AF611A33608A00E5C5FA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F545AF5F1A33608A00E5C5FA /* Main.storyboard */; };
+		F545AF631A33640A00E5C5FA /* SpotifyKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F545AF621A33640A00E5C5FA /* SpotifyKeys.plist */; };
 		F5834D711A2F785A00B4CF7C /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = F5834D701A2F785A00B4CF7C /* exit.png */; };
 		F587E13D1A2E6C5A00803702 /* 5Artists.png in Resources */ = {isa = PBXBuildFile; fileRef = F587E13C1A2E6C5A00803702 /* 5Artists.png */; };
 		F587E1611A2E958D00803702 /* back-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A3FD1A2828BC00359A22 /* back-100.png */; };
@@ -98,10 +98,10 @@
 		F545AF481A33570400E5C5FA /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
 		F545AF4B1A33580B00E5C5FA /* CredentialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CredentialManager.h; path = Classes/CredentialManager/CredentialManager.h; sourceTree = "<group>"; };
 		F545AF4C1A33580B00E5C5FA /* CredentialManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CredentialManager.m; path = Classes/CredentialManager/CredentialManager.m; sourceTree = "<group>"; };
-		F545AF4E1A3358E100E5C5FA /* SpotifyKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = SpotifyKeys.plist; path = "Supporting Files/SpotifyKeys.plist"; sourceTree = "<group>"; };
 		F545AF521A335ACD00E5C5FA /* 5Artists.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = 5Artists.xcdatamodel; sourceTree = "<group>"; };
 		F545AF5E1A33608A00E5C5FA /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = "Supporting Files/Base.lproj/LaunchScreen.xib"; sourceTree = "<group>"; };
 		F545AF5F1A33608A00E5C5FA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = "Supporting Files/Base.lproj/Main.storyboard"; sourceTree = "<group>"; };
+		F545AF621A33640A00E5C5FA /* SpotifyKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = SpotifyKeys.plist; path = "Supporting Files/SpotifyKeys.plist"; sourceTree = "<group>"; };
 		F5834D701A2F785A00B4CF7C /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exit.png; path = Assets/Images/exit.png; sourceTree = "<group>"; };
 		F587E13C1A2E6C5A00803702 /* 5Artists.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 5Artists.png; path = Assets/Images/5Artists.png; sourceTree = "<group>"; };
 		F5B1A3A71A2811F900359A22 /* TodayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
@@ -197,9 +197,9 @@
 		F50A916B1A27F80300D3146D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F545AF621A33640A00E5C5FA /* SpotifyKeys.plist */,
 				F545AF5E1A33608A00E5C5FA /* LaunchScreen.xib */,
 				F545AF5F1A33608A00E5C5FA /* Main.storyboard */,
-				F545AF4E1A3358E100E5C5FA /* SpotifyKeys.plist */,
 				F50A91781A27F80300D3146D /* Images.xcassets */,
 				F5B1A3AE1A28198A00359A22 /* 5Artists.entitlements */,
 				F50A916C1A27F80300D3146D /* Info.plist */,
@@ -534,7 +534,7 @@
 				F587E13D1A2E6C5A00803702 /* 5Artists.png in Resources */,
 				F50A91791A27F80300D3146D /* Images.xcassets in Resources */,
 				F545AF601A33608A00E5C5FA /* LaunchScreen.xib in Resources */,
-				F545AF4F1A3358E100E5C5FA /* SpotifyKeys.plist in Resources */,
+				F545AF631A33640A00E5C5FA /* SpotifyKeys.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
