@@ -27,10 +27,16 @@
     if (self)
     {
         NSString *spotifyKeysFilePath = [[NSBundle mainBundle] pathForResource:@"SpotifyKeys" ofType:@"plist"];
-        if (self.spotifyKeysDict == nil)
+        if ([[NSFileManager defaultManager] fileExistsAtPath:spotifyKeysFilePath])
         {
-            _spotifyKeysDict = [[NSMutableDictionary alloc] initWithContentsOfFile:spotifyKeysFilePath];
-            NSLog(@"%@", _spotifyKeysDict);
+            if (self.spotifyKeysDict == nil)
+            {
+                _spotifyKeysDict = [[NSMutableDictionary alloc] initWithContentsOfFile:spotifyKeysFilePath];
+            }
+        }
+        else
+        {
+            [NSException raise:@"Please create SpotifyKeys.plist file and add the required credentials" format:@"No credentials file found."];
         }
     }
     return self;
@@ -38,7 +44,6 @@
 
 - (NSString *)getValueForKey: (NSString *)key
 {
-    NSLog(@"%@",[_spotifyKeysDict valueForKey:key]);
     return [_spotifyKeysDict valueForKey:key];
 }
 @end
