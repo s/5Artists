@@ -118,7 +118,7 @@
                                             <constraint firstAttribute="width" secondItem="g5N-JB-Shk" secondAttribute="height" multiplier="1:1" id="orm-hz-J4o"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTc-j8-5sA">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTc-j8-5sA">
                                         <rect key="frame" x="262" y="97" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="KIl-D8-lPI"/>
@@ -131,7 +131,7 @@
                                             <action selector="nextArtist:" destination="l6R-lM-nxl" eventType="touchUpInside" id="hLO-q3-qcC"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c8x-Zj-QUV">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c8x-Zj-QUV">
                                         <rect key="frame" x="8" y="97" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="62r-Jz-4eN"/>
@@ -183,7 +183,7 @@
                                     <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xAL-We-2Jj">
                                         <rect key="frame" x="8" y="316" width="284" height="155"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wpx-yi-fJW">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wpx-yi-fJW">
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="284" id="XxM-2d-KsH"/>
                                                 </constraints>
@@ -282,7 +282,9 @@
                         <outlet property="artistPhoto" destination="g5N-JB-Shk" id="bB5-Fl-UWW"/>
                         <outlet property="biographyActivityIndicator" destination="Gvi-4e-FvD" id="Wxr-uy-aTy"/>
                         <outlet property="biographyScrollView" destination="xAL-We-2Jj" id="kZw-UH-GHw"/>
+                        <outlet property="leftButton" destination="c8x-Zj-QUV" id="Asd-6D-rBk"/>
                         <outlet property="photoActivityIndicator" destination="2P0-dt-XpG" id="dAZ-Nd-tNB"/>
+                        <outlet property="rightButton" destination="CTc-j8-5sA" id="dAl-yR-9pO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WgK-TJ-0Vh" userLabel="First Responder" sceneMemberID="firstResponder"/>

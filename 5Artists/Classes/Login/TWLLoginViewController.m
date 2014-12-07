@@ -40,11 +40,18 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
     self.scopes = @[SPTAuthUserReadPrivateScope, SPTAuthUserLibraryReadScope];
     id sessionData = [[NSUserDefaults standardUserDefaults] objectForKey:kSessionUserDefaultsKey];
     SPTSession *session = sessionData ? [NSKeyedUnarchiver unarchiveObjectWithData:sessionData] : nil;
+    
+    [self.loginButton setHidden:NO];
+    
     if (![session isValid])
     {
-        [self.loginButton setHidden:NO];
         [self.loginButton setEnabled:YES];
         [self.activityIndicator setHidden:YES];
+    }
+    else
+    {
+        [self.loginButton setEnabled:NO];
+        [self.activityIndicator setHidden:NO];
     }
     self.credentialManager = [CredentialManager sharedInstance];
     [self.navigationController setNavigationBarHidden:YES];

@@ -279,6 +279,8 @@
     [_activityIndicator stopAnimating];
     [_slideView bringSubviewToFront:self.view];
     [_photoActivityIndicator setHidden:NO];
+    _rightButton.enabled = YES;
+    _leftButton.enabled = YES;
     _artistPhoto.layer.cornerRadius = _artistPhoto.frame.size.height/2;
     _artistPhoto.layer.masksToBounds = YES;
     _artistPhoto.layer.borderWidth = 1.0;
@@ -383,7 +385,6 @@
     {
         NSString *bio = @"";
         bio = [[[[responseObject valueForKey:@"response"] valueForKey:@"biographies"] valueForKey:@"text"] objectAtIndex:0];
-        NSLog(@"asfhiasjlfk;as:%@", [bio class]);
         [_artistBios addObject:bio];
         if (index != 4)
         {
