@@ -294,9 +294,7 @@
     [sharedDefaults setObject:encodedObject forKey:@"todaysArtists"];
     [sharedDefaults synchronize];
     
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:NSUserDefaultsDidChangeNotification
-     object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSUserDefaultsDidChangeNotification object:self];
 }
 
 - (IBAction)nextArtist:(id)sender {
@@ -347,6 +345,9 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     TWLLoginViewController *loginViewController = (TWLLoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
     NSMutableArray *viewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+    
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.towerlabs.fiveartists.TodayExtensionSharingDefaults"];
+    [sharedDefaults removeObjectForKey:@"todaysArtists"];
     
     [viewControllers replaceObjectAtIndex:0 withObject:loginViewController];
     [self.navigationController setViewControllers:viewControllers];

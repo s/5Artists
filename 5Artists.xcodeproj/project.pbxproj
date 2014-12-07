@@ -18,12 +18,22 @@
 		F50A91D01A280C8E00D3146D /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F50A91A01A28029C00D3146D /* NotificationCenter.framework */; };
 		F50A91D81A280C8E00D3146D /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F50A91D71A280C8E00D3146D /* MainInterface.storyboard */; };
 		F50A91DB1A280C8E00D3146D /* 5ArtistsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F50A91CF1A280C8E00D3146D /* 5ArtistsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F5315EA31A33C3C20005CB5B /* TowerLabsLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = F5315EA21A33C3C20005CB5B /* TowerLabsLogo.png */; };
 		F545AF491A33570400E5C5FA /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F545AF481A33570400E5C5FA /* Spotify.framework */; };
 		F545AF4D1A33580B00E5C5FA /* CredentialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F545AF4C1A33580B00E5C5FA /* CredentialManager.m */; };
 		F545AF531A335ACD00E5C5FA /* 5Artists.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F545AF511A335ACD00E5C5FA /* 5Artists.xcdatamodeld */; };
 		F545AF601A33608A00E5C5FA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F545AF5E1A33608A00E5C5FA /* LaunchScreen.xib */; };
 		F545AF611A33608A00E5C5FA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F545AF5F1A33608A00E5C5FA /* Main.storyboard */; };
 		F545AF631A33640A00E5C5FA /* SpotifyKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F545AF621A33640A00E5C5FA /* SpotifyKeys.plist */; };
+		F545AF651A337D6A00E5C5FA /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = F545AF641A337D6A00E5C5FA /* info.png */; };
+		F545AF681A337E1400E5C5FA /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F545AF661A337E1400E5C5FA /* info@2x.png */; };
+		F545AF691A337E1400E5C5FA /* info@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F545AF671A337E1400E5C5FA /* info@3x.png */; };
+		F545AF6C1A337E5900E5C5FA /* exit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F545AF6A1A337E5900E5C5FA /* exit@2x.png */; };
+		F545AF6D1A337E5900E5C5FA /* exit@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F545AF6B1A337E5900E5C5FA /* exit@3x.png */; };
+		F545AF721A337EC900E5C5FA /* TWLAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F545AF701A337EC900E5C5FA /* TWLAboutViewController.m */; };
+		F545AF751A33802B00E5C5FA /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = F545AF741A33802B00E5C5FA /* close.png */; };
+		F545AF781A33815E00E5C5FA /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F545AF761A33815E00E5C5FA /* close@2x.png */; };
+		F545AF791A33815E00E5C5FA /* close@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F545AF771A33815E00E5C5FA /* close@3x.png */; };
 		F5834D711A2F785A00B4CF7C /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = F5834D701A2F785A00B4CF7C /* exit.png */; };
 		F587E13D1A2E6C5A00803702 /* 5Artists.png in Resources */ = {isa = PBXBuildFile; fileRef = F587E13C1A2E6C5A00803702 /* 5Artists.png */; };
 		F587E1611A2E958D00803702 /* back-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A3FD1A2828BC00359A22 /* back-100.png */; };
@@ -33,11 +43,6 @@
 		F5B1A3FC1A28260800359A22 /* listen_on_spotify-green.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A3FB1A28260800359A22 /* listen_on_spotify-green.png */; };
 		F5B1A3FF1A2828BC00359A22 /* back-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A3FD1A2828BC00359A22 /* back-100.png */; };
 		F5B1A4001A2828BC00359A22 /* forward-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A3FE1A2828BC00359A22 /* forward-100.png */; };
-		F5B1A4061A282F9D00359A22 /* bandofhorses.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A4011A282F9D00359A22 /* bandofhorses.jpg */; };
-		F5B1A4071A282F9D00359A22 /* beirut.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A4021A282F9D00359A22 /* beirut.jpg */; };
-		F5B1A4081A282F9D00359A22 /* firstaidkit.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A4031A282F9D00359A22 /* firstaidkit.jpg */; };
-		F5B1A4091A282F9D00359A22 /* imaginedragons.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A4041A282F9D00359A22 /* imaginedragons.jpg */; };
-		F5B1A40A1A282F9D00359A22 /* lorde.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A4051A282F9D00359A22 /* lorde.jpg */; };
 		F5FF7AA11A2C902D002B0CE7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FF7AA01A2C902D002B0CE7 /* CoreData.framework */; };
 		F5FF7AA91A2C9382002B0CE7 /* TWLDailyArtists.m in Sources */ = {isa = PBXBuildFile; fileRef = F5FF7AA81A2C9382002B0CE7 /* TWLDailyArtists.m */; };
 		F5FF7AAD1A2C9470002B0CE7 /* TWLDailyArtists+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = F5FF7AAC1A2C9470002B0CE7 /* TWLDailyArtists+Create.m */; };
@@ -95,6 +100,7 @@
 		F50A91CF1A280C8E00D3146D /* 5ArtistsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = 5ArtistsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F50A91D31A280C8E00D3146D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F50A91D71A280C8E00D3146D /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
+		F5315EA21A33C3C20005CB5B /* TowerLabsLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TowerLabsLogo.png; path = Assets/Images/TowerLabsLogo.png; sourceTree = "<group>"; };
 		F545AF481A33570400E5C5FA /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
 		F545AF4B1A33580B00E5C5FA /* CredentialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CredentialManager.h; path = Classes/CredentialManager/CredentialManager.h; sourceTree = "<group>"; };
 		F545AF4C1A33580B00E5C5FA /* CredentialManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CredentialManager.m; path = Classes/CredentialManager/CredentialManager.m; sourceTree = "<group>"; };
@@ -102,6 +108,16 @@
 		F545AF5E1A33608A00E5C5FA /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = "Supporting Files/Base.lproj/LaunchScreen.xib"; sourceTree = "<group>"; };
 		F545AF5F1A33608A00E5C5FA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = "Supporting Files/Base.lproj/Main.storyboard"; sourceTree = "<group>"; };
 		F545AF621A33640A00E5C5FA /* SpotifyKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = SpotifyKeys.plist; path = "Supporting Files/SpotifyKeys.plist"; sourceTree = "<group>"; };
+		F545AF641A337D6A00E5C5FA /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = info.png; path = Assets/Images/info.png; sourceTree = "<group>"; };
+		F545AF661A337E1400E5C5FA /* info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "info@2x.png"; path = "Assets/Images/info@2x.png"; sourceTree = "<group>"; };
+		F545AF671A337E1400E5C5FA /* info@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "info@3x.png"; path = "Assets/Images/info@3x.png"; sourceTree = "<group>"; };
+		F545AF6A1A337E5900E5C5FA /* exit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exit@2x.png"; path = "Assets/Images/exit@2x.png"; sourceTree = "<group>"; };
+		F545AF6B1A337E5900E5C5FA /* exit@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exit@3x.png"; path = "Assets/Images/exit@3x.png"; sourceTree = "<group>"; };
+		F545AF6F1A337EC900E5C5FA /* TWLAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TWLAboutViewController.h; path = Classes/About/TWLAboutViewController.h; sourceTree = "<group>"; };
+		F545AF701A337EC900E5C5FA /* TWLAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TWLAboutViewController.m; path = Classes/About/TWLAboutViewController.m; sourceTree = "<group>"; };
+		F545AF741A33802B00E5C5FA /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close.png; path = Assets/Images/close.png; sourceTree = "<group>"; };
+		F545AF761A33815E00E5C5FA /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close@2x.png"; path = "Assets/Images/close@2x.png"; sourceTree = "<group>"; };
+		F545AF771A33815E00E5C5FA /* close@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close@3x.png"; path = "Assets/Images/close@3x.png"; sourceTree = "<group>"; };
 		F5834D701A2F785A00B4CF7C /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exit.png; path = Assets/Images/exit.png; sourceTree = "<group>"; };
 		F587E13C1A2E6C5A00803702 /* 5Artists.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 5Artists.png; path = Assets/Images/5Artists.png; sourceTree = "<group>"; };
 		F5B1A3A71A2811F900359A22 /* TodayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
@@ -111,11 +127,6 @@
 		F5B1A3FB1A28260800359A22 /* listen_on_spotify-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "listen_on_spotify-green.png"; sourceTree = "<group>"; };
 		F5B1A3FD1A2828BC00359A22 /* back-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-100.png"; sourceTree = "<group>"; };
 		F5B1A3FE1A2828BC00359A22 /* forward-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "forward-100.png"; sourceTree = "<group>"; };
-		F5B1A4011A282F9D00359A22 /* bandofhorses.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bandofhorses.jpg; sourceTree = "<group>"; };
-		F5B1A4021A282F9D00359A22 /* beirut.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beirut.jpg; sourceTree = "<group>"; };
-		F5B1A4031A282F9D00359A22 /* firstaidkit.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = firstaidkit.jpg; sourceTree = "<group>"; };
-		F5B1A4041A282F9D00359A22 /* imaginedragons.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = imaginedragons.jpg; sourceTree = "<group>"; };
-		F5B1A4051A282F9D00359A22 /* lorde.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lorde.jpg; sourceTree = "<group>"; };
 		F5FF7AA01A2C902D002B0CE7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F5FF7AA71A2C9382002B0CE7 /* TWLDailyArtists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TWLDailyArtists.h; path = Classes/CoreData/DailyArtistsModel/TWLDailyArtists.h; sourceTree = "<group>"; };
 		F5FF7AA81A2C9382002B0CE7 /* TWLDailyArtists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TWLDailyArtists.m; path = Classes/CoreData/DailyArtistsModel/TWLDailyArtists.m; sourceTree = "<group>"; };
@@ -263,6 +274,15 @@
 			name = CredentialManager;
 			sourceTree = "<group>";
 		};
+		F545AF6E1A337EA000E5C5FA /* About */ = {
+			isa = PBXGroup;
+			children = (
+				F545AF6F1A337EC900E5C5FA /* TWLAboutViewController.h */,
+				F545AF701A337EC900E5C5FA /* TWLAboutViewController.m */,
+			);
+			name = About;
+			sourceTree = "<group>";
+		};
 		F5B1A40B1A28AF8700359A22 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,6 +294,7 @@
 				F5B1A4101A28AFBE00359A22 /* Login */,
 				F5B1A40F1A28AFB600359A22 /* Home */,
 				F5B1A40E1A28AFA900359A22 /* Delegate */,
+				F545AF6E1A337EA000E5C5FA /* About */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -289,7 +310,16 @@
 		F5B1A40D1A28AF9C00359A22 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F5315EA21A33C3C20005CB5B /* TowerLabsLogo.png */,
+				F545AF761A33815E00E5C5FA /* close@2x.png */,
+				F545AF771A33815E00E5C5FA /* close@3x.png */,
+				F545AF741A33802B00E5C5FA /* close.png */,
+				F545AF641A337D6A00E5C5FA /* info.png */,
 				F5834D701A2F785A00B4CF7C /* exit.png */,
+				F545AF6A1A337E5900E5C5FA /* exit@2x.png */,
+				F545AF6B1A337E5900E5C5FA /* exit@3x.png */,
+				F545AF661A337E1400E5C5FA /* info@2x.png */,
+				F545AF671A337E1400E5C5FA /* info@3x.png */,
 				F587E13C1A2E6C5A00803702 /* 5Artists.png */,
 				F50A91981A27FAE400D3146D /* log_in-mobile.png */,
 			);
@@ -343,11 +373,6 @@
 		F5B1A4131A28AFFD00359A22 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				F5B1A4011A282F9D00359A22 /* bandofhorses.jpg */,
-				F5B1A4021A282F9D00359A22 /* beirut.jpg */,
-				F5B1A4031A282F9D00359A22 /* firstaidkit.jpg */,
-				F5B1A4041A282F9D00359A22 /* imaginedragons.jpg */,
-				F5B1A4051A282F9D00359A22 /* lorde.jpg */,
 				F5B1A3FD1A2828BC00359A22 /* back-100.png */,
 				F5B1A3FE1A2828BC00359A22 /* forward-100.png */,
 				F5B1A3FB1A28260800359A22 /* listen_on_spotify-green.png */,
@@ -525,16 +550,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F545AF791A33815E00E5C5FA /* close@3x.png in Resources */,
+				F545AF781A33815E00E5C5FA /* close@2x.png in Resources */,
+				F545AF681A337E1400E5C5FA /* info@2x.png in Resources */,
 				F587E1611A2E958D00803702 /* back-100.png in Resources */,
+				F5315EA31A33C3C20005CB5B /* TowerLabsLogo.png in Resources */,
+				F545AF751A33802B00E5C5FA /* close.png in Resources */,
 				F545AF611A33608A00E5C5FA /* Main.storyboard in Resources */,
 				F5834D711A2F785A00B4CF7C /* exit.png in Resources */,
+				F545AF651A337D6A00E5C5FA /* info.png in Resources */,
 				F587E1621A2E958D00803702 /* forward-100.png in Resources */,
 				F587E1631A2E958D00803702 /* listen_on_spotify-green.png in Resources */,
 				F50A91991A27FAE400D3146D /* log_in-mobile.png in Resources */,
+				F545AF6C1A337E5900E5C5FA /* exit@2x.png in Resources */,
 				F587E13D1A2E6C5A00803702 /* 5Artists.png in Resources */,
 				F50A91791A27F80300D3146D /* Images.xcassets in Resources */,
 				F545AF601A33608A00E5C5FA /* LaunchScreen.xib in Resources */,
+				F545AF6D1A337E5900E5C5FA /* exit@3x.png in Resources */,
 				F545AF631A33640A00E5C5FA /* SpotifyKeys.plist in Resources */,
+				F545AF691A337E1400E5C5FA /* info@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,15 +583,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5B1A4061A282F9D00359A22 /* bandofhorses.jpg in Resources */,
 				F50A91D81A280C8E00D3146D /* MainInterface.storyboard in Resources */,
 				F5B1A4001A2828BC00359A22 /* forward-100.png in Resources */,
-				F5B1A40A1A282F9D00359A22 /* lorde.jpg in Resources */,
-				F5B1A4091A282F9D00359A22 /* imaginedragons.jpg in Resources */,
-				F5B1A4081A282F9D00359A22 /* firstaidkit.jpg in Resources */,
 				F5B1A3FF1A2828BC00359A22 /* back-100.png in Resources */,
 				F5B1A3FC1A28260800359A22 /* listen_on_spotify-green.png in Resources */,
-				F5B1A4071A282F9D00359A22 /* beirut.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,6 +605,7 @@
 				F50A91711A27F80300D3146D /* TWLAppDelegate.m in Sources */,
 				F5FF7AAD1A2C9470002B0CE7 /* TWLDailyArtists+Create.m in Sources */,
 				F50A916E1A27F80300D3146D /* main.m in Sources */,
+				F545AF721A337EC900E5C5FA /* TWLAboutViewController.m in Sources */,
 				F5FF7AB11A2C9B7F002B0CE7 /* CoreDataStack.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

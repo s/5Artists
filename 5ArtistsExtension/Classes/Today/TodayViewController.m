@@ -48,7 +48,7 @@
                                                  name:NSUserDefaultsDidChangeNotification
                                                object:nil];
     
-
+    
     [self retrieveTodaysArtists];
     if ([_todaysArtists count])
     {
@@ -154,6 +154,10 @@
     {
         [_normalView.subviews setValue:@NO forKey:@"hidden"];
         [_noResultsView setHidden:YES];
+    }
+    else
+    {
+        NSLog(@"Here");
     }
 }
 
