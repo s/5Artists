@@ -25,6 +25,8 @@
 #import "CoreDataStack.h"
 #import "TWLDailyArtists+Create.h"
 #import "TWLLoginViewController.h"
+#import "AFNetworking.h"
+#import "CredentialManager.h"
 
 #import <Spotify/Spotify.h>
 
@@ -35,6 +37,7 @@
 @property (nonatomic) CoreDataStack *coreDataStack;
 @property (nonatomic) NSMutableArray *relatedArtists;
 @property (nonatomic) NSInteger currentArtist;
+@property (nonatomic) NSMutableArray *artistBios;
 @end
 
 @implementation TWLHomeViewController
@@ -48,6 +51,7 @@
     self.currentArtist = 0;
     self.coreDataStack = [CoreDataStack sharedInstance];
     self.todaysArtists = [[NSMutableArray alloc] initWithArray:[self getTodaysArtists]];
+    self.artistBios = [[NSMutableArray alloc] init];
     
     self.navigationController.navigationBar.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0.0f, 0.5f);
@@ -205,6 +209,7 @@
 
     [self sendArtistsToTheExtension];
     [self showTodaysArtists];
+    [self getArtistBiosWithArtistIndex:0];
 }
 
 - (void)saveTodaysArtists
@@ -218,6 +223,7 @@
         [temp setValue:artist.name forKey:@"name"];
         [temp setValue:artist.identifier forKey:@"artistIdentifier"];
         [temp setValue:[artist.uri absoluteString] forKey:@"uri"];
+        [temp setValue:nil forKey:@"biography"];
         [temp setValue:[artist.largestImage.imageURL absoluteString] forKey:@"largestImageUrl"];
         [temp setValue:[NSNumber numberWithFloat:artist.popularity] forKey:@"popularity"];
         [temp setValue:[NSDate date] forKey:@"date"];
@@ -327,11 +333,124 @@
 - (void)updateArtist
 {
     _artistNameAndListenerCount.text = [[_todaysArtists objectAtIndex:_currentArtist] valueForKey:@"name"];
+    NSString *artistBio = @"";
+    if ([_artistBios count])
+    {
+        artistBio = [_artistBios objectAtIndex:_currentArtist];
+    }
+    else
+    {
+        artistBio = [[_todaysArtists objectAtIndex:_currentArtist] valueForKey:@"biography"];
+    }
+    if (artistBio)
+    {
+        [_biographyActivityIndicator stopAnimating];
+        _artistBiography.attributedText = [self getAttributedBiographyForString:artistBio];
+    }
+
     [_photoActivityIndicator setHidden:NO];
     [_photoActivityIndicator startAnimating];
     _artistPhoto.image = nil;
     //download image async and cache it.
 }
+
+- (void)getArtistBiosWithArtistIndex: (int)index
+{
+    if (nil != [[_todaysArtists objectAtIndex:0] valueForKey:@"biography"])
+    {
+        return;
+    }
+    NSString *apiCallURL = [[CredentialManager sharedInstance] getValueForKey:@"echoNestAPIURL"];
+    NSString *apiKey = [[CredentialManager sharedInstance] getValueForKey:@"echoNestAPIKey"];
+    NSString *artistName = [[_todaysArtists objectAtIndex:index] valueForKey:@"name"];
+    
+    NSDictionary *parameters = @{
+                                 @"api_key":apiKey,
+                                 @"name":artistName,
+                                 @"format":@"json",
+                                 @"results":@"1",
+                                 @"start":@"0",
+                                 @"license":@"cc-by-sa"
+                                 };
+    
+    int nextIndex = index + 1;
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:apiCallURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject)
+    {
+        NSString *bio = @"";
+        bio = [[[[responseObject valueForKey:@"response"] valueForKey:@"biographies"] valueForKey:@"text"] objectAtIndex:0];
+        NSLog(@"asfhiasjlfk;as:%@", [bio class]);
+        [_artistBios addObject:bio];
+        if (index != 4)
+        {
+            [self getArtistBiosWithArtistIndex:nextIndex];
+        }
+        else
+        {
+            [self saveArtistsBiosToDB];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)saveArtistsBiosToDB
+{
+    for(int i=0;i<5;i++)
+    {
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"DailyArtists"];
+        request.sortDescriptors = nil;
+
+        request.predicate = [NSPredicate predicateWithFormat:@"name = %@", [[_todaysArtists objectAtIndex:i] valueForKey:@"name"] ];
+        
+        NSError *error;
+        NSArray *matches = [_coreDataStack.context executeFetchRequest:request error:&error];
+        
+        if (!error)
+        {
+           
+            [[matches objectAtIndex:0] setValue:[_artistBios objectAtIndex:i] forKey:@"biography"];
+            [_coreDataStack saveContext];
+        }
+    }
+    [self updateArtist];
+}
+
+- (NSMutableAttributedString *)getAttributedBiographyForString: (NSString *)bio
+{
+    // Create the attributed string
+    if(!bio)
+    {
+        return nil;
+    }
+        
+    NSMutableAttributedString *biography = [[NSMutableAttributedString alloc]initWithString:
+                                            bio];
+    
+    // Declare the fonts
+    UIFont *biographyFont1 = [UIFont fontWithName:@"AvenirNext-Regular" size:14.0];
+    
+    // Declare the colors
+    UIColor *biographyColor1 = [UIColor colorWithRed:0.000000 green:0.000000 blue:0.000000 alpha:0.360784];
+    UIColor *biographyColor2 = [UIColor colorWithWhite:1.000000 alpha:1.000000];
+    
+    // Declare the paragraph styles
+    NSMutableParagraphStyle *biographyParaStyle1 = [[NSMutableParagraphStyle alloc]init];
+    biographyParaStyle1.alignment = 1;
+    
+    NSRange range = NSMakeRange(0,[bio length]);
+    
+    // Create the attributes and add them to the string
+    [biography addAttribute:NSParagraphStyleAttributeName value:biographyParaStyle1 range:range];
+    [biography addAttribute:NSUnderlineColorAttributeName value:biographyColor1 range:range];
+    [biography addAttribute:NSFontAttributeName value:biographyFont1 range:range];
+    [biography addAttribute:NSForegroundColorAttributeName value:biographyColor2 range:range];
+    
+    return biography;
+}
+
+#pragma mark - IBActions
 - (IBAction)listenOnSpotify:(id)sender
 {
     NSString *applicationOpenUri = [NSString stringWithFormat:@"spotify://%@",[[_todaysArtists objectAtIndex:_currentArtist] valueForKey:@"uri"] ];

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="DailyArtists" representedClassName="TWLDailyArtists" syncable="YES">
         <attribute name="artistIdentifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="biography" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="largestImageUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -9,6 +10,6 @@
         <attribute name="uri" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DailyArtists" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="DailyArtists" positionX="0" positionY="0" width="128" height="150"/>
     </elements>
 </model>

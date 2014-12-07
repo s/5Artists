@@ -31,6 +31,7 @@
 @property (nonatomic, retain) NSString * uri;
 @property (nonatomic, retain) NSString * artistIdentifier;
 @property (nonatomic, retain) NSString * largestImageUrl;
+@property (nonatomic, retain) NSString * biography;
 @property (nonatomic, retain) NSNumber * popularity;
 @property (nonatomic, retain) NSDate * date;
 

@@ -30,6 +30,7 @@
 @dynamic uri;
 @dynamic artistIdentifier;
 @dynamic largestImageUrl;
+@dynamic biography;
 @dynamic popularity;
 @dynamic date;
 
