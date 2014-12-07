@@ -45,7 +45,6 @@
         {
             if (self.spotifyKeysDict == nil)
             {
-                NSLog(@"girdim");
                 _spotifyKeysDict = [[NSMutableDictionary alloc] initWithContentsOfFile:spotifyKeysFilePath];
             }
         }

@@ -335,7 +335,21 @@
 - (IBAction)listenOnSpotify:(id)sender
 {
     NSString *applicationOpenUri = [NSString stringWithFormat:@"spotify://%@",[[_todaysArtists objectAtIndex:_currentArtist] valueForKey:@"uri"] ];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:applicationOpenUri]];
+    NSURL *applicationOpenURL = [NSURL URLWithString:applicationOpenUri];
+    if([[UIApplication sharedApplication] canOpenURL:applicationOpenURL])
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:applicationOpenUri]];
+    }
+    else
+    {
+        UIAlertView *cantOpenOnSpotifyAlertView =
+        [[UIAlertView alloc] initWithTitle:@"Warning"
+                                   message:@"Spotify app isn't installed on your iPhone."
+                                  delegate:self
+                         cancelButtonTitle:@"Okay"
+                         otherButtonTitles:nil, nil];
+        [cantOpenOnSpotifyAlertView show];
+    }
 }
 
 - (IBAction)signOut:(id)sender
