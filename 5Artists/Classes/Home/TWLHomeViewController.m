@@ -333,6 +333,7 @@
 - (void)updateArtist
 {
     _artistNameAndListenerCount.text = [[_todaysArtists objectAtIndex:_currentArtist] valueForKey:@"name"];
+
     NSString *artistBio = @"";
     if ([_artistBios count])
     {
@@ -346,6 +347,8 @@
     {
         [_biographyActivityIndicator stopAnimating];
         _artistBiography.attributedText = [self getAttributedBiographyForString:artistBio];
+        [self.biographyScrollView setContentOffset:CGPointZero animated:YES];
+        [self.biographyScrollView setHidden:NO];
     }
 
     [_photoActivityIndicator setHidden:NO];

@@ -180,8 +180,8 @@
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Gvi-4e-FvD">
                                         <rect key="frame" x="140" y="393" width="20" height="20"/>
                                     </activityIndicatorView>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xAL-We-2Jj">
-                                        <rect key="frame" x="8" y="316" width="284" height="180"/>
+                                    <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xAL-We-2Jj">
+                                        <rect key="frame" x="8" y="316" width="284" height="155"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wpx-yi-fJW">
                                                 <constraints>
@@ -192,10 +192,11 @@
                                             </label>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="wpx-yi-fJW" secondAttribute="bottom" id="Ul0-ZP-rql"/>
-                                            <constraint firstItem="wpx-yi-fJW" firstAttribute="leading" secondItem="xAL-We-2Jj" secondAttribute="leading" id="cMY-lA-sNp"/>
+                                            <constraint firstItem="wpx-yi-fJW" firstAttribute="top" secondItem="xAL-We-2Jj" secondAttribute="top" id="5b2-In-00I"/>
+                                            <constraint firstAttribute="bottom" secondItem="wpx-yi-fJW" secondAttribute="bottom" constant="15" id="e9O-jg-Uya"/>
                                             <constraint firstItem="wpx-yi-fJW" firstAttribute="top" secondItem="xAL-We-2Jj" secondAttribute="top" id="hPs-dL-66w"/>
                                             <constraint firstAttribute="trailing" secondItem="wpx-yi-fJW" secondAttribute="trailing" id="r68-yZ-H6R"/>
+                                            <constraint firstItem="wpx-yi-fJW" firstAttribute="leading" secondItem="xAL-We-2Jj" secondAttribute="leading" id="zCk-hw-DZ8"/>
                                         </constraints>
                                     </scrollView>
                                 </subviews>
@@ -204,7 +205,7 @@
                                     <constraint firstItem="g5N-JB-Shk" firstAttribute="centerX" secondItem="ymp-u4-kFT" secondAttribute="centerX" id="3uP-S3-LQ8"/>
                                     <constraint firstItem="xAL-We-2Jj" firstAttribute="top" secondItem="YCa-BV-QMd" secondAttribute="bottom" constant="20" id="5qy-SD-bUr"/>
                                     <constraint firstItem="ymp-u4-kFT" firstAttribute="top" secondItem="g5N-JB-Shk" secondAttribute="bottom" constant="8" id="AvX-5K-vSe"/>
-                                    <constraint firstAttribute="bottom" secondItem="xAL-We-2Jj" secondAttribute="bottom" constant="4" id="CeQ-rG-4Zo"/>
+                                    <constraint firstAttribute="bottom" secondItem="xAL-We-2Jj" secondAttribute="bottom" constant="29" id="CeQ-rG-4Zo"/>
                                     <constraint firstAttribute="centerX" secondItem="YCa-BV-QMd" secondAttribute="centerX" id="GPb-lz-P1g"/>
                                     <constraint firstItem="CTc-j8-5sA" firstAttribute="leading" secondItem="g5N-JB-Shk" secondAttribute="trailing" constant="12" id="Gaw-j4-wh4"/>
                                     <constraint firstItem="g5N-JB-Shk" firstAttribute="centerY" secondItem="CTc-j8-5sA" secondAttribute="centerY" constant="5" id="IHc-7R-rp3"/>
@@ -280,6 +281,7 @@
                         <outlet property="artistNameAndListenerCount" destination="ymp-u4-kFT" id="Isu-GO-0jk"/>
                         <outlet property="artistPhoto" destination="g5N-JB-Shk" id="bB5-Fl-UWW"/>
                         <outlet property="biographyActivityIndicator" destination="Gvi-4e-FvD" id="Wxr-uy-aTy"/>
+                        <outlet property="biographyScrollView" destination="xAL-We-2Jj" id="kZw-UH-GHw"/>
                         <outlet property="photoActivityIndicator" destination="2P0-dt-XpG" id="dAZ-Nd-tNB"/>
                     </connections>
                 </viewController>

@@ -33,6 +33,7 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *photoActivityIndicator;
 @property (strong, nonatomic) IBOutlet UILabel *artistBiography;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *biographyActivityIndicator;
+@property (strong, nonatomic) IBOutlet UIScrollView *biographyScrollView;
 - (IBAction)nextArtist:(id)sender;
 - (IBAction)previousArtist:(id)sender;
 - (IBAction)listenOnSpotify:(id)sender;
