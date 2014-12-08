@@ -349,7 +349,7 @@
     {
         [_biographyActivityIndicator stopAnimating];
         _artistBiography.attributedText = [self getAttributedBiographyForString:artistBio];
-        [self.biographyScrollView setContentOffset:CGPointZero animated:YES];
+        [self.biographyScrollView setContentOffset:CGPointZero animated:NO];
         [self.biographyScrollView setHidden:NO];
     }
 
