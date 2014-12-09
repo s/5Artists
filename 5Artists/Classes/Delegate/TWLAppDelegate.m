@@ -51,9 +51,7 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
     {
         if ([session isValid])
         {
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            TWLHomeViewController *homeViewController = (TWLHomeViewController *)[storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
-            self.window.rootViewController = homeViewController;
+            
         }
         else
         {
@@ -62,7 +60,9 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
     }
     else
     {
-        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        TWLHomeViewController *loginViewController = (TWLHomeViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        self.window.rootViewController = loginViewController;
     }
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     return YES;
@@ -87,7 +87,7 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
             NSData *sessionData = [NSKeyedArchiver archivedDataWithRootObject:session];
             [[NSUserDefaults standardUserDefaults] setObject:sessionData forKey:kSessionUserDefaultsKey];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            [self presentHomeViewController];
+           // [self presentHomeViewController];
         }
     }];
 }
