@@ -22,13 +22,13 @@
  */
 
 #import "TodayViewController.h"
+#import "AFNetworking.h"
+#import "UIImageView+AFNetworking.h"
 #import <NotificationCenter/NotificationCenter.h>
 
 @interface TodayViewController () <NCWidgetProviding>
 @property (nonatomic) NSInteger currentArtist;
 @property (nonatomic) NSMutableArray *todaysArtists;
-@property (nonatomic) NSMutableArray *loadedImages;
-
 @end
 
 @implementation TodayViewController
@@ -37,8 +37,7 @@
 {
     [super viewDidLoad];
     self.currentArtist = 0;
-    self.loadedImages = [[NSMutableArray alloc] init];
-
+    
     // Define general attributes for the entire text
     _artistPhoto.layer.cornerRadius = _artistPhoto.frame.size.height/2;
     _artistPhoto.clipsToBounds = YES;
@@ -101,7 +100,7 @@
     {
         _currentArtist++;
     }
-    NSLog(@"Current Artist:%d", _currentArtist);
+    NSLog(@"Current Artist:%ld", (long)_currentArtist);
     [self updateArtist];
 }
 
@@ -115,7 +114,7 @@
     {
         _currentArtist--;
     }
-    NSLog(@"Current Artist:%d", _currentArtist);
+    NSLog(@"Current Artist:%ld", (long)_currentArtist);
     [self updateArtist];
 }
 
@@ -129,15 +128,39 @@
 {
 
     _artistNameAndListenerCount.text = [[_todaysArtists objectAtIndex:_currentArtist] valueForKey:@"name"];
-
-    if (![_loadedImages containsObject:[NSNumber numberWithInt:_currentArtist]])
-    {
-        [_activityIndicator setHidden:NO];
-        [_activityIndicator startAnimating];
-        _artistPhoto.image = nil;
-    }
+    NSURLRequest *imageDownloadRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[[_todaysArtists objectAtIndex:_currentArtist] valueForKey:@"largestImageUrl"]]];
+    _artistPhoto.image = nil;
+    [_activityIndicator startAnimating];
+    [_activityIndicator setHidden:NO];
+    __weak typeof(self) weakSelf = self;
+    [_artistPhoto setImageWithURLRequest:imageDownloadRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+     {
+         float width;
+         float height;
+         
+         if (image.size.width > image.size.height)
+         {
+             
+             height = 200;
+             width  = height * image.size.width / image.size.height;
+         }
+         else
+         {
+             width = 200;
+             height = width * image.size.height / image.size.width;
+         }
+         CGSize newSize = CGSizeMake(width, height);
+         UIGraphicsBeginImageContext(newSize);
+         [image drawInRect:CGRectMake(0, 0, width, height)];
+         UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+         UIGraphicsEndImageContext();
+         weakSelf.artistPhoto.image = resizedImage;
+         [weakSelf.activityIndicator stopAnimating];
+     }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+         
+     }];
     
-    //download image async and cache it.
+
 }
 
 - (void)retrieveTodaysArtists

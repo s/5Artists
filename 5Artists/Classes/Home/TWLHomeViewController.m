@@ -27,7 +27,7 @@
 #import "TWLLoginViewController.h"
 #import "AFNetworking.h"
 #import "CredentialManager.h"
-
+#import "UIImageView+AFNetworking.h"
 #import <Spotify/Spotify.h>
 
 
@@ -51,6 +51,7 @@
     self.currentArtist = 0;
     self.coreDataStack = [CoreDataStack sharedInstance];
     self.todaysArtists = [[NSMutableArray alloc] initWithArray:[self getTodaysArtists]];
+
     self.artistBios = [[NSMutableArray alloc] init];
     
     self.navigationController.navigationBar.layer.shadowColor = [[UIColor blackColor] CGColor];
@@ -58,8 +59,6 @@
     self.navigationController.navigationBar.layer.shadowRadius = 2.0f;
     self.navigationController.navigationBar.layer.shadowOpacity = 1.0f;
 
-    
-    NSLog(@"Today's Artists: \n %@", _todaysArtists);
     if(![_todaysArtists count])
     {
         [SPTRequest savedTracksForUserInSession:_session callback:^(NSError *error, SPTListPage *listPage) {
@@ -193,20 +192,8 @@
 {
     NSSortDescriptor *sortByPopularity = [NSSortDescriptor sortDescriptorWithKey:@"popularity" ascending:NO];
     [_relatedArtists sortUsingDescriptors:[NSArray arrayWithObject:sortByPopularity]];
-    NSLog(@"Related Artists Sorted: \n");
-    for(SPTArtist *artist in _relatedArtists)
-    {
-        NSLog(@"%@ - %f",artist.name, artist.popularity);
-    }
     _todaysArtists = [NSMutableArray arrayWithArray:[_relatedArtists subarrayWithRange:NSMakeRange(0, 5)]];
-    NSLog(@"Todays Artists:\n");
-    for(SPTArtist *artist in _todaysArtists)
-    {
-        NSLog(@"%@ - %f",artist.name, artist.popularity);
-    }
     [self saveTodaysArtists];
-    NSLog(@"Today's Artists: \n %@", [self getTodaysArtists]);
-
     [self sendArtistsToTheExtension];
     [self showTodaysArtists];
     [self getArtistBiosWithArtistIndex:0];
@@ -297,8 +284,27 @@
 
     NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.towerlabs.fiveartists.TodayExtensionSharingDefaults"];
     NSData *encodedObject;
-
-    encodedObject = [NSKeyedArchiver archivedDataWithRootObject:_todaysArtists];
+    NSMutableArray *todaysArtistWithEncodable = [[NSMutableArray alloc] init];
+    NSMutableDictionary *temp;
+    if ([[_todaysArtists objectAtIndex:0] isKindOfClass:[TWLDailyArtists class]])
+    {
+        for(TWLDailyArtists *artist in _todaysArtists)
+        {
+            temp = [[NSMutableDictionary alloc] init];
+            [temp setValue:artist.name forKey:@"name"];
+            [temp setValue:artist.artistIdentifier forKey:@"artistIdentifier"];
+            [temp setValue:artist.uri forKey:@"uri"];
+            [temp setValue:artist.largestImageUrl forKey:@"largestImageUrl"];
+            [temp setValue:artist.popularity forKey:@"popularity"];
+            [todaysArtistWithEncodable addObject:temp];
+        }
+        encodedObject = [NSKeyedArchiver archivedDataWithRootObject:todaysArtistWithEncodable];
+    }
+    else
+    {
+        encodedObject = [NSKeyedArchiver archivedDataWithRootObject:_todaysArtists];
+    }
+    
     [sharedDefaults setObject:encodedObject forKey:@"todaysArtists"];
     [sharedDefaults synchronize];
     
@@ -356,7 +362,35 @@
     [_photoActivityIndicator setHidden:NO];
     [_photoActivityIndicator startAnimating];
     _artistPhoto.image = nil;
-    //download image async and cache it.
+    
+    NSURLRequest *imageDownloadRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[[_todaysArtists objectAtIndex:_currentArtist] valueForKey:@"largestImageUrl"]]];
+    __weak typeof(self) weakSelf = self;
+    [_artistPhoto setImageWithURLRequest:imageDownloadRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+    {
+        float width;
+        float height;
+        
+        if (image.size.width > image.size.height)
+        {
+
+            height = 200;
+            width  = height * image.size.width / image.size.height;
+        }
+        else
+        {
+            width = 200;
+            height = width * image.size.height / image.size.width;
+        }
+        CGSize newSize = CGSizeMake(width, height);
+        UIGraphicsBeginImageContext(newSize);
+        [image drawInRect:CGRectMake(0, 0, width, height)];
+        UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        weakSelf.artistPhoto.image = resizedImage;
+        [weakSelf.photoActivityIndicator stopAnimating];
+    }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        
+    }];
 }
 
 - (void)getArtistBiosWithArtistIndex: (int)index
@@ -385,7 +419,7 @@
     {
         NSString *bio = @"";
         bio = [[[[responseObject valueForKey:@"response"] valueForKey:@"biographies"] valueForKey:@"text"] objectAtIndex:0];
-        [_artistBios addObject:bio];
+        [_artistBios addObject:[self trimBioFromText:bio]];
         if (index != 4)
         {
             [self getArtistBiosWithArtistIndex:nextIndex];
@@ -413,12 +447,26 @@
         
         if (!error)
         {
-           
-            [[matches objectAtIndex:0] setValue:[_artistBios objectAtIndex:i] forKey:@"biography"];
+            [[matches objectAtIndex:0] setValue:[self trimBioFromText:[_artistBios objectAtIndex:_currentArtist]] forKey:@"biography"];
             [_coreDataStack saveContext];
         }
     }
     [self updateArtist];
+}
+
+- (NSString *)trimBioFromText: (NSString *)text
+{
+    NSArray *sentences = [text componentsSeparatedByString:@". "];
+    NSString *trimmedBio = @"";
+    if ([sentences count] >= 2)
+    {
+        trimmedBio = [NSString stringWithFormat:@"%@. %@.",[sentences objectAtIndex:0],[sentences objectAtIndex:1]];
+    }
+    else if([sentences count] >=1 )
+    {
+        trimmedBio = [NSString stringWithFormat:@"%@.",[sentences objectAtIndex:0]];
+    }
+    return trimmedBio;
 }
 
 - (NSMutableAttributedString *)getAttributedBiographyForString: (NSString *)bio
