@@ -1,7 +1,7 @@
 5Artists
 ========
 
-An iOS Today Extension for Spotify Premium users.<br/>
+An iOS Today Extension for Spotify users.<br/>
 Basically application needs user to login with Spotify first.<br/>
 After that application grabs user's saved tracks and finds a root artist.<br/>
 Next step is finding related artists of this root artist.<br/>
