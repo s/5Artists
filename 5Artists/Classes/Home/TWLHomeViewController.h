@@ -36,6 +36,8 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *biographyScrollView;
 @property (strong, nonatomic) IBOutlet UIButton *rightButton;
 @property (strong, nonatomic) IBOutlet UIButton *leftButton;
+
+
 - (IBAction)nextArtist:(id)sender;
 - (IBAction)previousArtist:(id)sender;
 - (IBAction)listenOnSpotify:(id)sender;

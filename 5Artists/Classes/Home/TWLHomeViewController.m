@@ -28,16 +28,31 @@
 #import "AFNetworking.h"
 #import "CredentialManager.h"
 #import "UIImageView+AFNetworking.h"
+#import "UIImageView+Resize.h"
 #import <Spotify/Spotify.h>
 
 
 @interface TWLHomeViewController ()
+
+//Core Data Stack
+
+@property (nonatomic, strong) CoreDataStack *coreDataStack;
+
+//Spotify Session
 @property (nonatomic, strong) SPTSession *session;
+
+//Biographies of artists
+@property (nonatomic, strong) NSMutableArray *artistBios;
+
+//Todays artists
 @property (nonatomic, strong) NSMutableArray *todaysArtists;
-@property (nonatomic) CoreDataStack *coreDataStack;
-@property (nonatomic) NSMutableArray *relatedArtists;
+
+//Related Artists of a root artist
+@property (nonatomic, strong) NSMutableArray *relatedArtists;
+
+//Current index for image slider
 @property (nonatomic) NSInteger currentArtist;
-@property (nonatomic) NSMutableArray *artistBios;
+
 @end
 
 @implementation TWLHomeViewController
@@ -160,7 +175,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark - Helpers
+#pragma mark - CoreData Related Methods
 - (NSArray *)getTodaysArtists
 {
     NSManagedObjectContext *moc = [_coreDataStack context];
@@ -173,30 +188,6 @@
     //NSLog(@"Fetch Error: %@",errorOfFetch);
     
     return response;
-}
-
-- (void)getRelatedArtistsOfRootArtist: (SPTArtist *)rootArtist callback:(void (^)(void))callbackBlock
-{
-    self.relatedArtists = [[NSMutableArray alloc] init];
-    [rootArtist requestRelatedArtists:_session callback:^(NSError *error, NSArray *relatedArtists)
-     {
-         _relatedArtists = [NSMutableArray arrayWithArray:relatedArtists];
-         if (callbackBlock)
-         {
-             callbackBlock();
-         }
-     }];
-}
-
-- (void)decideTodaysArtists
-{
-    NSSortDescriptor *sortByPopularity = [NSSortDescriptor sortDescriptorWithKey:@"popularity" ascending:NO];
-    [_relatedArtists sortUsingDescriptors:[NSArray arrayWithObject:sortByPopularity]];
-    _todaysArtists = [NSMutableArray arrayWithArray:[_relatedArtists subarrayWithRange:NSMakeRange(0, 5)]];
-    [self saveTodaysArtists];
-    [self sendArtistsToTheExtension];
-    [self showTodaysArtists];
-    [self getArtistBiosWithArtistIndex:0];
 }
 
 - (void)saveTodaysArtists
@@ -228,7 +219,7 @@
     
     NSError *error = nil;
     NSArray *allArtistsFromYesterday = [[_coreDataStack context] executeFetchRequest:dailyArtists error:&error];
-
+    
     //error handling goes here
     for (NSManagedObject *artist in allArtistsFromYesterday)
     {
@@ -243,24 +234,54 @@
     //more error handling here
 }
 
-- (BOOL)isTodaysDataValid
+- (void)saveArtistsBiosToDB
 {
-    NSDateComponents *componentsForNow = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
-    NSDateComponents *componentsOfData = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[[_todaysArtists objectAtIndex:0] valueForKey:@"date"]];
-
-    NSInteger dayOfNow = [componentsForNow day];
-    NSInteger dayOfData = [componentsOfData day];
-    
-    if ( dayOfData != dayOfNow)
+    for(int i=0;i<5;i++)
     {
-        return NO;
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"DailyArtists"];
+        request.sortDescriptors = nil;
+        
+        request.predicate = [NSPredicate predicateWithFormat:@"name = %@", [[_todaysArtists objectAtIndex:i] valueForKey:@"name"] ];
+        
+        NSError *error;
+        NSArray *matches = [_coreDataStack.context executeFetchRequest:request error:&error];
+        
+        if (!error)
+        {
+            [[matches objectAtIndex:0] setValue:[self trimBioFromText:[_artistBios objectAtIndex:_currentArtist]] forKey:@"biography"];
+            [_coreDataStack saveContext];
+        }
     }
-    else
-    {
-        return YES;
-    }
+    [self updateArtist];
 }
 
+#pragma mark - SPT Requests
+
+- (void)getRelatedArtistsOfRootArtist: (SPTArtist *)rootArtist callback:(void (^)(void))callbackBlock
+{
+    self.relatedArtists = [[NSMutableArray alloc] init];
+    [rootArtist requestRelatedArtists:_session callback:^(NSError *error, NSArray *relatedArtists)
+     {
+         _relatedArtists = [NSMutableArray arrayWithArray:relatedArtists];
+         if (callbackBlock)
+         {
+             callbackBlock();
+         }
+     }];
+}
+
+- (void)decideTodaysArtists
+{
+    NSSortDescriptor *sortByPopularity = [NSSortDescriptor sortDescriptorWithKey:@"popularity" ascending:NO];
+    [_relatedArtists sortUsingDescriptors:[NSArray arrayWithObject:sortByPopularity]];
+    _todaysArtists = [NSMutableArray arrayWithArray:[_relatedArtists subarrayWithRange:NSMakeRange(0, 5)]];
+    [self saveTodaysArtists];
+    [self sendArtistsToTheExtension];
+    [self showTodaysArtists];
+    [self getArtistBiosWithArtistIndex:0];
+}
+
+#pragma mark - UI Related Methods
 - (void)showTodaysArtists
 {
     [_activityIndicator stopAnimating];
@@ -278,6 +299,94 @@
     _artistPhoto.layer.shadowOpacity = 1.0f;
     [self updateArtist];
 }
+
+- (NSString *)trimBioFromText: (NSString *)text
+{
+    NSArray *sentences = [text componentsSeparatedByString:@". "];
+    NSString *trimmedBio = @"";
+    if ([sentences count] >= 2)
+    {
+        trimmedBio = [NSString stringWithFormat:@"%@. %@.",[sentences objectAtIndex:0],[sentences objectAtIndex:1]];
+    }
+    else if([sentences count] >=1 )
+    {
+        trimmedBio = [NSString stringWithFormat:@"%@.",[sentences objectAtIndex:0]];
+    }
+    return trimmedBio;
+}
+
+- (NSMutableAttributedString *)getAttributedBiographyForString: (NSString *)bio
+{
+    // Create the attributed string
+    if(!bio)
+    {
+        return nil;
+    }
+    
+    NSMutableAttributedString *biography = [[NSMutableAttributedString alloc]initWithString:
+                                            bio];
+    
+    // Declare the fonts
+    UIFont *biographyFont1 = [UIFont fontWithName:@"AvenirNext-Regular" size:14.0];
+    
+    // Declare the colors
+    UIColor *biographyColor1 = [UIColor colorWithRed:0.000000 green:0.000000 blue:0.000000 alpha:0.360784];
+    UIColor *biographyColor2 = [UIColor colorWithWhite:1.000000 alpha:1.000000];
+    
+    // Declare the paragraph styles
+    NSMutableParagraphStyle *biographyParaStyle1 = [[NSMutableParagraphStyle alloc]init];
+    biographyParaStyle1.alignment = 1;
+    
+    NSRange range = NSMakeRange(0,[bio length]);
+    
+    // Create the attributes and add them to the string
+    [biography addAttribute:NSParagraphStyleAttributeName value:biographyParaStyle1 range:range];
+    [biography addAttribute:NSUnderlineColorAttributeName value:biographyColor1 range:range];
+    [biography addAttribute:NSFontAttributeName value:biographyFont1 range:range];
+    [biography addAttribute:NSForegroundColorAttributeName value:biographyColor2 range:range];
+    
+    return biography;
+}
+
+- (void)updateArtist
+{
+    _artistNameAndListenerCount.text = [[_todaysArtists objectAtIndex:_currentArtist] valueForKey:@"name"];
+    
+    NSString *artistBio = @"";
+    if ([_artistBios count])
+    {
+        artistBio = [_artistBios objectAtIndex:_currentArtist];
+    }
+    else
+    {
+        artistBio = [[_todaysArtists objectAtIndex:_currentArtist] valueForKey:@"biography"];
+    }
+    if (artistBio)
+    {
+        [_biographyActivityIndicator stopAnimating];
+        _artistBiography.attributedText = [self getAttributedBiographyForString:artistBio];
+        [self.biographyScrollView setContentOffset:CGPointZero animated:NO];
+        [self.biographyScrollView setHidden:NO];
+    }
+    
+    [_photoActivityIndicator setHidden:NO];
+    [_photoActivityIndicator startAnimating];
+    _artistPhoto.image = nil;
+    
+    NSURLRequest *imageDownloadRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[[_todaysArtists objectAtIndex:_currentArtist] valueForKey:@"largestImageUrl"]]];
+    __weak typeof(self) weakSelf = self;
+    [_artistPhoto setImageWithURLRequest:imageDownloadRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+     {
+         [weakSelf.artistPhoto resizeWithImage:image];
+         [weakSelf.photoActivityIndicator stopAnimating];
+     }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+         
+     }];
+}
+
+
+
+#pragma mark - Extension Related Methods
 
 - (void)sendArtistsToTheExtension
 {
@@ -311,87 +420,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NSUserDefaultsDidChangeNotification object:self];
 }
 
-- (IBAction)nextArtist:(id)sender {
-    if (_currentArtist == 4)
-    {
-        _currentArtist = 0;
-    }
-    else
-    {
-        _currentArtist++;
-    }
-    NSLog(@"Current Artist:%d", _currentArtist);
-    [self updateArtist];
-}
-
-- (IBAction)previousArtist:(id)sender
-{
-    if (_currentArtist == 0)
-    {
-        _currentArtist = 4;
-    }
-    else
-    {
-        _currentArtist--;
-    }
-    NSLog(@"Current Artist:%d", _currentArtist);
-    [self updateArtist];
-}
-
-- (void)updateArtist
-{
-    _artistNameAndListenerCount.text = [[_todaysArtists objectAtIndex:_currentArtist] valueForKey:@"name"];
-
-    NSString *artistBio = @"";
-    if ([_artistBios count])
-    {
-        artistBio = [_artistBios objectAtIndex:_currentArtist];
-    }
-    else
-    {
-        artistBio = [[_todaysArtists objectAtIndex:_currentArtist] valueForKey:@"biography"];
-    }
-    if (artistBio)
-    {
-        [_biographyActivityIndicator stopAnimating];
-        _artistBiography.attributedText = [self getAttributedBiographyForString:artistBio];
-        [self.biographyScrollView setContentOffset:CGPointZero animated:NO];
-        [self.biographyScrollView setHidden:NO];
-    }
-
-    [_photoActivityIndicator setHidden:NO];
-    [_photoActivityIndicator startAnimating];
-    _artistPhoto.image = nil;
-    
-    NSURLRequest *imageDownloadRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[[_todaysArtists objectAtIndex:_currentArtist] valueForKey:@"largestImageUrl"]]];
-    __weak typeof(self) weakSelf = self;
-    [_artistPhoto setImageWithURLRequest:imageDownloadRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
-    {
-        float width;
-        float height;
-        
-        if (image.size.width > image.size.height)
-        {
-
-            height = 200;
-            width  = height * image.size.width / image.size.height;
-        }
-        else
-        {
-            width = 200;
-            height = width * image.size.height / image.size.width;
-        }
-        CGSize newSize = CGSizeMake(width, height);
-        UIGraphicsBeginImageContext(newSize);
-        [image drawInRect:CGRectMake(0, 0, width, height)];
-        UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        weakSelf.artistPhoto.image = resizedImage;
-        [weakSelf.photoActivityIndicator stopAnimating];
-    }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        
-    }];
-}
+#pragma mark - EchoNest API methods
 
 - (void)getArtistBiosWithArtistIndex: (int)index
 {
@@ -433,74 +462,6 @@
     }];
 }
 
-- (void)saveArtistsBiosToDB
-{
-    for(int i=0;i<5;i++)
-    {
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"DailyArtists"];
-        request.sortDescriptors = nil;
-
-        request.predicate = [NSPredicate predicateWithFormat:@"name = %@", [[_todaysArtists objectAtIndex:i] valueForKey:@"name"] ];
-        
-        NSError *error;
-        NSArray *matches = [_coreDataStack.context executeFetchRequest:request error:&error];
-        
-        if (!error)
-        {
-            [[matches objectAtIndex:0] setValue:[self trimBioFromText:[_artistBios objectAtIndex:_currentArtist]] forKey:@"biography"];
-            [_coreDataStack saveContext];
-        }
-    }
-    [self updateArtist];
-}
-
-- (NSString *)trimBioFromText: (NSString *)text
-{
-    NSArray *sentences = [text componentsSeparatedByString:@". "];
-    NSString *trimmedBio = @"";
-    if ([sentences count] >= 2)
-    {
-        trimmedBio = [NSString stringWithFormat:@"%@. %@.",[sentences objectAtIndex:0],[sentences objectAtIndex:1]];
-    }
-    else if([sentences count] >=1 )
-    {
-        trimmedBio = [NSString stringWithFormat:@"%@.",[sentences objectAtIndex:0]];
-    }
-    return trimmedBio;
-}
-
-- (NSMutableAttributedString *)getAttributedBiographyForString: (NSString *)bio
-{
-    // Create the attributed string
-    if(!bio)
-    {
-        return nil;
-    }
-        
-    NSMutableAttributedString *biography = [[NSMutableAttributedString alloc]initWithString:
-                                            bio];
-    
-    // Declare the fonts
-    UIFont *biographyFont1 = [UIFont fontWithName:@"AvenirNext-Regular" size:14.0];
-    
-    // Declare the colors
-    UIColor *biographyColor1 = [UIColor colorWithRed:0.000000 green:0.000000 blue:0.000000 alpha:0.360784];
-    UIColor *biographyColor2 = [UIColor colorWithWhite:1.000000 alpha:1.000000];
-    
-    // Declare the paragraph styles
-    NSMutableParagraphStyle *biographyParaStyle1 = [[NSMutableParagraphStyle alloc]init];
-    biographyParaStyle1.alignment = 1;
-    
-    NSRange range = NSMakeRange(0,[bio length]);
-    
-    // Create the attributes and add them to the string
-    [biography addAttribute:NSParagraphStyleAttributeName value:biographyParaStyle1 range:range];
-    [biography addAttribute:NSUnderlineColorAttributeName value:biographyColor1 range:range];
-    [biography addAttribute:NSFontAttributeName value:biographyFont1 range:range];
-    [biography addAttribute:NSForegroundColorAttributeName value:biographyColor2 range:range];
-    
-    return biography;
-}
 
 #pragma mark - IBActions
 - (IBAction)listenOnSpotify:(id)sender
@@ -536,5 +497,51 @@
     
     [viewControllers replaceObjectAtIndex:0 withObject:loginViewController];
     [self.navigationController setViewControllers:viewControllers];
+}
+
+- (IBAction)nextArtist:(id)sender {
+    if (_currentArtist == 4)
+    {
+        _currentArtist = 0;
+    }
+    else
+    {
+        _currentArtist++;
+    }
+    NSLog(@"Current Artist:%d", _currentArtist);
+    [self updateArtist];
+}
+
+- (IBAction)previousArtist:(id)sender
+{
+    if (_currentArtist == 0)
+    {
+        _currentArtist = 4;
+    }
+    else
+    {
+        _currentArtist--;
+    }
+    NSLog(@"Current Artist:%d", _currentArtist);
+    [self updateArtist];
+}
+
+#pragma mark - Helpers
+- (BOOL)isTodaysDataValid
+{
+    NSDateComponents *componentsForNow = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
+    NSDateComponents *componentsOfData = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[[_todaysArtists objectAtIndex:0] valueForKey:@"date"]];
+    
+    NSInteger dayOfNow = [componentsForNow day];
+    NSInteger dayOfData = [componentsOfData day];
+    
+    if ( dayOfData != dayOfNow)
+    {
+        return NO;
+    }
+    else
+    {
+        return YES;
+    }
 }
 @end

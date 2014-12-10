@@ -21,8 +21,9 @@
  Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#import "TodayViewController.h"
 #import "AFNetworking.h"
+#import "UIImageView+Resize.h"
+#import "TodayViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import <NotificationCenter/NotificationCenter.h>
 
@@ -135,26 +136,7 @@
     __weak typeof(self) weakSelf = self;
     [_artistPhoto setImageWithURLRequest:imageDownloadRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
      {
-         float width;
-         float height;
-         
-         if (image.size.width > image.size.height)
-         {
-             
-             height = 200;
-             width  = height * image.size.width / image.size.height;
-         }
-         else
-         {
-             width = 200;
-             height = width * image.size.height / image.size.width;
-         }
-         CGSize newSize = CGSizeMake(width, height);
-         UIGraphicsBeginImageContext(newSize);
-         [image drawInRect:CGRectMake(0, 0, width, height)];
-         UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-         UIGraphicsEndImageContext();
-         weakSelf.artistPhoto.image = resizedImage;
+         [weakSelf.artistPhoto resizeWithImage:image];
          [weakSelf.activityIndicator stopAnimating];
      }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
          
