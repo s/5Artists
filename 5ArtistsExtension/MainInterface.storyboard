@@ -3,7 +3,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Today View Controller-->
@@ -107,7 +106,6 @@
                         <constraints>
                             <constraint firstItem="mGT-SK-P2g" firstAttribute="centerX" secondItem="rij-MG-qwh" secondAttribute="centerX" id="6OA-c9-xG7"/>
                             <constraint firstItem="EIk-1E-uBK" firstAttribute="centerY" secondItem="02l-LT-KEd" secondAttribute="centerY" constant="-1" id="6Xb-oa-8pz"/>
-                            <constraint firstItem="EIk-1E-uBK" firstAttribute="width" secondItem="fye-mz-j39" secondAttribute="width" multiplier="0.625" id="8iO-1l-Wpk"/>
                             <constraint firstItem="aNh-bQ-DUZ" firstAttribute="top" secondItem="Qv0-bY-8x7" secondAttribute="bottom" id="ML3-tb-B2c"/>
                             <constraint firstItem="5Gk-wn-OfI" firstAttribute="centerY" secondItem="EIk-1E-uBK" secondAttribute="centerY" constant="-4" id="Q9O-72-TVS"/>
                             <constraint firstItem="EIk-1E-uBK" firstAttribute="leading" secondItem="mGT-SK-P2g" secondAttribute="leading" id="Vz7-mm-9Ge"/>
