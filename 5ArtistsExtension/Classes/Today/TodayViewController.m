@@ -34,13 +34,14 @@
 
 @implementation TodayViewController
 
+#pragma mark - Lifecycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.currentArtist = 0;
     
     // Define general attributes for the entire text
-    _artistPhoto.layer.cornerRadius = _artistPhoto.frame.size.height/2;
+    _artistPhoto.layer.cornerRadius = _artistPhoto.frame.size.width/2;
     _artistPhoto.clipsToBounds = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -86,12 +87,15 @@
     // If there's an update, use NCUpdateResultNewData
     completionHandler(NCUpdateResultNewData);
 }
+
 - (UIEdgeInsets)widgetMarginInsetsForProposedMarginInsets:(UIEdgeInsets)margins
 {
     margins.left = 0.0;
     margins.bottom = 10;
     return margins;
 }
+
+#pragma mark - IBActions
 - (IBAction)nextArtist:(id)sender {
     if (_currentArtist == 4)
     {
@@ -125,9 +129,10 @@
     [self.extensionContext openURL:[NSURL URLWithString:applicationOpenUri] completionHandler:nil];
 }
 
+#pragma mark - UI related methods
 - (void)updateArtist
 {
-
+    
     _artistNameAndListenerCount.text = [[_todaysArtists objectAtIndex:_currentArtist] valueForKey:@"name"];
     NSURLRequest *imageDownloadRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[[_todaysArtists objectAtIndex:_currentArtist] valueForKey:@"largestImageUrl"]]];
     _artistPhoto.image = nil;
@@ -142,9 +147,10 @@
          
      }];
     
-
+    
 }
 
+#pragma mark - Communication related methods
 - (void)retrieveTodaysArtists
 {
     NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.towerlabs.fiveartists.TodayExtensionSharingDefaults"];
@@ -159,15 +165,11 @@
     {
         [_normalView.subviews setValue:@NO forKey:@"hidden"];
         [_noResultsView setHidden:YES];
+        
     }
     else
     {
         NSLog(@"Here");
     }
-}
-
-- (void)imageLoadDidFinish:(NSNotification *)notification
-{
-    [_activityIndicator stopAnimating];
 }
 @end

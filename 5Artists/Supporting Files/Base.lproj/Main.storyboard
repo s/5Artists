@@ -17,8 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="5Artists.png" translatesAutoresizingMaskIntoConstraints="NO" id="KSV-c1-1Lb">
-                                <rect key="frame" x="0.0" y="0.0" width="640" height="1136"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="5Artists.png" translatesAutoresizingMaskIntoConstraints="NO" id="KSV-c1-1Lb">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="640" id="a7k-tW-DXU"/>
                                     <constraint firstAttribute="height" constant="1136" id="z6w-mQ-jvO"/>
@@ -157,11 +157,12 @@
                                             <action selector="listenOnSpotify:" destination="l6R-lM-nxl" eventType="touchUpInside" id="X62-pC-f2a"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymp-u4-kFT">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymp-u4-kFT">
                                         <rect key="frame" x="50" y="225" width="200" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="Xkg-Hr-qK9"/>
                                             <constraint firstAttribute="width" constant="280" id="dSk-aM-ft3"/>
+                                            <constraint firstAttribute="width" constant="200" id="kFn-kM-17c"/>
                                             <constraint firstAttribute="height" constant="30" id="zIm-uC-dVn"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
@@ -183,8 +184,9 @@
                                     <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xAL-We-2Jj">
                                         <rect key="frame" x="8" y="316" width="284" height="155"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wpx-yi-fJW">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wpx-yi-fJW">
                                                 <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="284" id="H9J-lJ-OPA"/>
                                                     <constraint firstAttribute="width" constant="284" id="XxM-2d-KsH"/>
                                                 </constraints>
                                                 <attributedString key="attributedText"/>
@@ -264,7 +266,7 @@
                                 <segue destination="gcF-6g-cMc" kind="presentation" id="6Jd-rq-UmT"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="exit.png" width="15" style="plain" id="29B-zL-qeE">
+                        <barButtonItem key="rightBarButtonItem" image="exit.png" width="15" id="29B-zL-qeE">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="signOut:" destination="l6R-lM-nxl" id="MHX-qX-YIG"/>

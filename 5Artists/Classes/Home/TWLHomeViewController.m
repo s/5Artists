@@ -60,14 +60,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     id sessionData = [[NSUserDefaults standardUserDefaults] objectForKey:@"SpotifySession"];
     self.session = sessionData ? [NSKeyedUnarchiver unarchiveObjectWithData:sessionData] : nil;
     self.currentArtist = 0;
     self.coreDataStack = [CoreDataStack sharedInstance];
     self.todaysArtists = [[NSMutableArray alloc] initWithArray:[self getTodaysArtists]];
-
     self.artistBios = [[NSMutableArray alloc] init];
+    
+    _artistPhoto.layer.cornerRadius = _artistPhoto.frame.size.height/2;
+    _artistPhoto.layer.masksToBounds = YES;
+    _artistPhoto.layer.borderWidth = 1.0;
+    _artistPhoto.layer.borderColor = [UIColor colorWithRed:42.0/255.0 green:42.0/255.0 blue:42.0/255.0 alpha:1].CGColor;
+    _artistPhoto.layer.shadowColor = [[UIColor blackColor] CGColor];
+    _artistPhoto.layer.shadowOffset = CGSizeMake(0.0f, 0.5f);
+    _artistPhoto.layer.shadowRadius = 2.0f;
+    _artistPhoto.layer.shadowOpacity = 1.0f;
     
     self.navigationController.navigationBar.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0.0f, 0.5f);
@@ -102,13 +109,13 @@
                          }
                          else
                          {
+                             [self showErrorMessageWithMessage:@"An error occured while getting your trakcs. Please log out and try again."];
                              NSLog(@"Error deciding root artist from user saved tracks. \n %@", [error description]);
                          }
                      }];
                 }
                 else
                 {
-                    //Getting the root artist
                     [SPTRequest requestItemAtURI:[NSURL URLWithString:@"spotify:artist:53XhwfbYqKCa1cC15pYq2q"] withSession:_session callback:^(NSError *error, SPTArtist *artist) {
                         if (!error)
                         {
@@ -118,13 +125,15 @@
                         }
                         else
                         {
-                            NSLog(@"Error getting root artist from our choice. \n%@", [error description]);
+                            [self showErrorMessageWithMessage:@"An error occured while getting your artists. Please log out and try again."];
+                            NSLog(@"Error getting root artist from pre-defined choice. \n%@", [error description]);
                         }
                     }];
                 }
             }
             else
             {
+                [self showErrorMessageWithMessage:@"An error occured while getting your artists. Please log out and try again."];
                 NSLog(@"Error getting saved tracks of user. \n%@", [error description]);
             }
         }];
@@ -146,7 +155,7 @@
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DailyArtists"];
             
             fetchRequest.fetchLimit = 1;
-            fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"popularity" ascending:NO]];
+            fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"popularity" ascending:YES]];
             
             NSError *error = nil;
             
@@ -163,7 +172,9 @@
                  }
                  else
                  {
-                    NSLog(@"Error getting artist object from yesterday's most popular artist. \n%@", [error description]);
+                     
+                     [self showErrorMessageWithMessage:@"An error occured while getting your artists. Please try terminating and reopenning the application again."];
+                     NSLog(@"Error getting artist object from yesterday's most popular artist. \n%@", [error description]);
                  }
             }];
         }
@@ -248,7 +259,7 @@
         
         if (!error)
         {
-            [[matches objectAtIndex:0] setValue:[self trimBioFromText:[_artistBios objectAtIndex:_currentArtist]] forKey:@"biography"];
+            [[matches objectAtIndex:0] setValue:[self trimBioFromText:[_artistBios objectAtIndex:i]] forKey:@"biography"];
             [_coreDataStack saveContext];
         }
     }
@@ -289,14 +300,6 @@
     [_photoActivityIndicator setHidden:NO];
     _rightButton.enabled = YES;
     _leftButton.enabled = YES;
-    _artistPhoto.layer.cornerRadius = _artistPhoto.frame.size.height/2;
-    _artistPhoto.layer.masksToBounds = YES;
-    _artistPhoto.layer.borderWidth = 1.0;
-    _artistPhoto.layer.borderColor = [UIColor colorWithRed:42.0/255.0 green:42.0/255.0 blue:42.0/255.0 alpha:1].CGColor;
-    _artistPhoto.layer.shadowColor = [[UIColor blackColor] CGColor];
-    _artistPhoto.layer.shadowOffset = CGSizeMake(0.0f, 0.5f);
-    _artistPhoto.layer.shadowRadius = 2.0f;
-    _artistPhoto.layer.shadowOpacity = 1.0f;
     [self updateArtist];
 }
 
@@ -335,7 +338,7 @@
     
     // Declare the paragraph styles
     NSMutableParagraphStyle *biographyParaStyle1 = [[NSMutableParagraphStyle alloc]init];
-    biographyParaStyle1.alignment = 1;
+    biographyParaStyle1.alignment = 3;
     
     NSRange range = NSMakeRange(0,[bio length]);
     
@@ -384,7 +387,16 @@
      }];
 }
 
-
+- (void)showErrorMessageWithMessage: (NSString *)message
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:message
+                                                       delegate:self
+                                              cancelButtonTitle:@"Okay"
+                                              otherButtonTitles:nil, nil];
+    
+    [alertView show];
+}
 
 #pragma mark - Extension Related Methods
 
@@ -394,18 +406,14 @@
     NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.towerlabs.fiveartists.TodayExtensionSharingDefaults"];
     NSData *encodedObject;
     NSMutableArray *todaysArtistWithEncodable = [[NSMutableArray alloc] init];
-    NSMutableDictionary *temp;
+    
     if ([[_todaysArtists objectAtIndex:0] isKindOfClass:[TWLDailyArtists class]])
     {
         for(TWLDailyArtists *artist in _todaysArtists)
         {
-            temp = [[NSMutableDictionary alloc] init];
-            [temp setValue:artist.name forKey:@"name"];
-            [temp setValue:artist.artistIdentifier forKey:@"artistIdentifier"];
-            [temp setValue:artist.uri forKey:@"uri"];
-            [temp setValue:artist.largestImageUrl forKey:@"largestImageUrl"];
-            [temp setValue:artist.popularity forKey:@"popularity"];
-            [todaysArtistWithEncodable addObject:temp];
+            NSArray *keys = [[[artist entity] attributesByName] allKeys];
+            NSDictionary *artistDict = [artist dictionaryWithValuesForKeys:keys];
+            [todaysArtistWithEncodable addObject:artistDict];
         }
         encodedObject = [NSKeyedArchiver archivedDataWithRootObject:todaysArtistWithEncodable];
     }
@@ -508,7 +516,6 @@
     {
         _currentArtist++;
     }
-    NSLog(@"Current Artist:%d", _currentArtist);
     [self updateArtist];
 }
 
@@ -522,7 +529,6 @@
     {
         _currentArtist--;
     }
-    NSLog(@"Current Artist:%d", _currentArtist);
     [self updateArtist];
 }
 
@@ -544,4 +550,5 @@
         return YES;
     }
 }
+
 @end

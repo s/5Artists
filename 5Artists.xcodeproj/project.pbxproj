@@ -835,8 +835,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/5Artists",
-					"/Users/ozcan/Downloads/ios-sdk-master",
-					"$(PROJECT_DIR)/5Artists/Frameworks",
 				);
 				INFOPLIST_FILE = "5Artists/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -860,8 +858,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/5Artists",
-					"/Users/ozcan/Downloads/ios-sdk-master",
-					"$(PROJECT_DIR)/5Artists/Frameworks",
 				);
 				INFOPLIST_FILE = "5Artists/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -916,8 +912,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
+					"DEBUG=0",
 					AF_APP_EXTENSIONS,
 				);
 				INFOPLIST_FILE = 5ArtistsExtension/Info.plist;
