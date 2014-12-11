@@ -60,6 +60,8 @@
 		F587E1611A2E958D00803702 /* back-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A3FD1A2828BC00359A22 /* back-100.png */; };
 		F587E1621A2E958D00803702 /* forward-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A3FE1A2828BC00359A22 /* forward-100.png */; };
 		F587E1631A2E958D00803702 /* listen_on_spotify-green.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A3FB1A28260800359A22 /* listen_on_spotify-green.png */; };
+		F58CA1311A39BD5100A9EA87 /* TWLShownArtists.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA1301A39BD5100A9EA87 /* TWLShownArtists.m */; };
+		F58CA1341A39BFB800A9EA87 /* TWLShownArtists+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = F58CA1331A39BFB800A9EA87 /* TWLShownArtists+Create.m */; };
 		F5B1A3A91A2811F900359A22 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B1A3A81A2811F900359A22 /* TodayViewController.m */; };
 		F5B1A3FC1A28260800359A22 /* listen_on_spotify-green.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A3FB1A28260800359A22 /* listen_on_spotify-green.png */; };
 		F5B1A3FF1A2828BC00359A22 /* back-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B1A3FD1A2828BC00359A22 /* back-100.png */; };
@@ -122,6 +124,7 @@
 		F50A91CF1A280C8E00D3146D /* 5ArtistsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = 5ArtistsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F50A91D31A280C8E00D3146D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F50A91D71A280C8E00D3146D /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
+		F50FCF301A3A423300010CED /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		F5315EA21A33C3C20005CB5B /* TowerLabsLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TowerLabsLogo.png; path = Assets/Images/TowerLabsLogo.png; sourceTree = "<group>"; };
 		F5315EA51A33DA620005CB5B /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		F5315EA61A33DA620005CB5B /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
@@ -163,6 +166,10 @@
 		F55F1E3F1A38B9D60031066F /* UIImageView+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+Resize.m"; path = "Classes/UIImageView + Resize/UIImageView+Resize.m"; sourceTree = "<group>"; };
 		F5834D701A2F785A00B4CF7C /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exit.png; path = Assets/Images/exit.png; sourceTree = "<group>"; };
 		F587E13C1A2E6C5A00803702 /* 5Artists.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 5Artists.png; path = Assets/Images/5Artists.png; sourceTree = "<group>"; };
+		F58CA12F1A39BD5100A9EA87 /* TWLShownArtists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TWLShownArtists.h; path = Classes/CoreData/ShownArtistsModel/TWLShownArtists.h; sourceTree = "<group>"; };
+		F58CA1301A39BD5100A9EA87 /* TWLShownArtists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TWLShownArtists.m; path = Classes/CoreData/ShownArtistsModel/TWLShownArtists.m; sourceTree = "<group>"; };
+		F58CA1321A39BFB800A9EA87 /* TWLShownArtists+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TWLShownArtists+Create.h"; path = "Classes/CoreData/ShownArtistsCategory/TWLShownArtists+Create.h"; sourceTree = "<group>"; };
+		F58CA1331A39BFB800A9EA87 /* TWLShownArtists+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TWLShownArtists+Create.m"; path = "Classes/CoreData/ShownArtistsCategory/TWLShownArtists+Create.m"; sourceTree = "<group>"; };
 		F5B1A3A71A2811F900359A22 /* TodayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
 		F5B1A3A81A2811F900359A22 /* TodayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
 		F5B1A3AE1A28198A00359A22 /* 5Artists.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = 5Artists.entitlements; path = "Supporting Files/5Artists.entitlements"; sourceTree = "<group>"; };
@@ -285,6 +292,7 @@
 		F50A919F1A28029C00D3146D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F50FCF301A3A423300010CED /* CoreTelephony.framework */,
 				F5FF7AA01A2C902D002B0CE7 /* CoreData.framework */,
 				F50A91A01A28029C00D3146D /* NotificationCenter.framework */,
 			);
@@ -367,9 +375,29 @@
 			name = ImageResizeCategory;
 			sourceTree = "<group>";
 		};
+		F58CA12D1A39B77B00A9EA87 /* ShownArtistsCategory */ = {
+			isa = PBXGroup;
+			children = (
+				F58CA1321A39BFB800A9EA87 /* TWLShownArtists+Create.h */,
+				F58CA1331A39BFB800A9EA87 /* TWLShownArtists+Create.m */,
+			);
+			name = ShownArtistsCategory;
+			sourceTree = "<group>";
+		};
+		F58CA12E1A39B7A100A9EA87 /* ShownArtists Model */ = {
+			isa = PBXGroup;
+			children = (
+				F58CA12F1A39BD5100A9EA87 /* TWLShownArtists.h */,
+				F58CA1301A39BD5100A9EA87 /* TWLShownArtists.m */,
+			);
+			name = "ShownArtists Model";
+			sourceTree = "<group>";
+		};
 		F5B1A40B1A28AF8700359A22 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F58CA12E1A39B7A100A9EA87 /* ShownArtists Model */,
+				F58CA12D1A39B77B00A9EA87 /* ShownArtistsCategory */,
 				F55F1E3D1A38B9A70031066F /* ImageResizeCategory */,
 				F545AF4A1A3357B700E5C5FA /* CredentialManager */,
 				F5FF7AAE1A2C9B18002B0CE7 /* CoreData Stack */,
@@ -686,6 +714,7 @@
 				F545AF531A335ACD00E5C5FA /* 5Artists.xcdatamodeld in Sources */,
 				F5315EBC1A33DA620005CB5B /* AFSecurityPolicy.m in Sources */,
 				F5FF7AA91A2C9382002B0CE7 /* TWLDailyArtists.m in Sources */,
+				F58CA1311A39BD5100A9EA87 /* TWLShownArtists.m in Sources */,
 				F5315EB91A33DA620005CB5B /* AFHTTPRequestOperationManager.m in Sources */,
 				F545AF4D1A33580B00E5C5FA /* CredentialManager.m in Sources */,
 				F50A91741A27F80300D3146D /* TWLLoginViewController.m in Sources */,
@@ -694,6 +723,7 @@
 				F5FF7AAD1A2C9470002B0CE7 /* TWLDailyArtists+Create.m in Sources */,
 				F5315EC01A33DA620005CB5B /* AFURLSessionManager.m in Sources */,
 				F5315EBF1A33DA620005CB5B /* AFURLResponseSerialization.m in Sources */,
+				F58CA1341A39BFB800A9EA87 /* TWLShownArtists+Create.m in Sources */,
 				F50A916E1A27F80300D3146D /* main.m in Sources */,
 				F545AF721A337EC900E5C5FA /* TWLAboutViewController.m in Sources */,
 				F5315EBE1A33DA620005CB5B /* AFURLRequestSerialization.m in Sources */,
@@ -836,6 +866,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/5Artists",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "DEBUG=0";
 				INFOPLIST_FILE = "5Artists/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

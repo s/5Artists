@@ -21,15 +21,30 @@
  Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+//Header File
 #import "TWLHomeViewController.h"
+
+//Spotify Framework
+#import <Spotify/Spotify.h>
+
+//Core Data Classes
 #import "CoreDataStack.h"
 #import "TWLDailyArtists+Create.h"
-#import "TWLLoginViewController.h"
+#import "TWLShownArtists+Create.h"
+
+//AFNetworking
 #import "AFNetworking.h"
-#import "CredentialManager.h"
 #import "UIImageView+AFNetworking.h"
+
+//Login VC
+#import "TWLLoginViewController.h"
+
+//Credential Manager
+#import "CredentialManager.h"
+
+//UIImageView Resize
 #import "UIImageView+Resize.h"
-#import <Spotify/Spotify.h>
+
 
 
 @interface TWLHomeViewController ()
@@ -53,9 +68,13 @@
 //Current index for image slider
 @property (nonatomic) NSInteger currentArtist;
 
+@property (nonatomic, strong) NSMutableArray *notShownArtists;
+
 @end
 
 @implementation TWLHomeViewController
+
+#pragma mark - Lifecycle
 
 - (void)viewDidLoad
 {
@@ -66,6 +85,7 @@
     self.coreDataStack = [CoreDataStack sharedInstance];
     self.todaysArtists = [[NSMutableArray alloc] initWithArray:[self getTodaysArtists]];
     self.artistBios = [[NSMutableArray alloc] init];
+    self.notShownArtists = [[NSMutableArray alloc] init];
     
     _artistPhoto.layer.cornerRadius = _artistPhoto.frame.size.height/2;
     _artistPhoto.layer.masksToBounds = YES;
@@ -80,7 +100,7 @@
     self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0.0f, 0.5f);
     self.navigationController.navigationBar.layer.shadowRadius = 2.0f;
     self.navigationController.navigationBar.layer.shadowOpacity = 1.0f;
-
+    
     if(![_todaysArtists count])
     {
         [SPTRequest savedTracksForUserInSession:_session callback:^(NSError *error, SPTListPage *listPage) {
@@ -116,19 +136,8 @@
                 }
                 else
                 {
-                    [SPTRequest requestItemAtURI:[NSURL URLWithString:@"spotify:artist:53XhwfbYqKCa1cC15pYq2q"] withSession:_session callback:^(NSError *error, SPTArtist *artist) {
-                        if (!error)
-                        {
-                            [self getRelatedArtistsOfRootArtist: artist callback:^{
-                                [self decideTodaysArtists];
-                            }];
-                        }
-                        else
-                        {
-                            [self showErrorMessageWithMessage:@"An error occured while getting your artists. Please log out and try again."];
-                            NSLog(@"Error getting root artist from pre-defined choice. \n%@", [error description]);
-                        }
-                    }];
+                    [self showErrorMessageWithMessage:@"No saved tracks found on your account. Please save some tracks and try again."];
+                    NSLog(@"Error getting root artist from pre-defined choice. \n%@", [error description]);
                 }
             }
             else
@@ -152,40 +161,22 @@
         else
         {
             NSLog(@"Data is not valid");
-            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DailyArtists"];
-            
-            fetchRequest.fetchLimit = 1;
-            fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"popularity" ascending:YES]];
-            
-            NSError *error = nil;
-            
-            TWLDailyArtists *fetchedMostPopularArtist = [[_coreDataStack context] executeFetchRequest:fetchRequest error:&error].lastObject;
-
-            [SPTArtist artistWithURI:[NSURL URLWithString:fetchedMostPopularArtist.uri] session:_session callback:^(NSError *error, SPTArtist *artist)
-             {
-                 if (!error)
-                 {
-                     [self getRelatedArtistsOfRootArtist:artist callback:^{
-                         [self deleteTodaysArtists];
-                         [self decideTodaysArtists];
-                     }];
-                 }
-                 else
-                 {
-                     
-                     [self showErrorMessageWithMessage:@"An error occured while getting your artists. Please try terminating and reopenning the application again."];
-                     NSLog(@"Error getting artist object from yesterday's most popular artist. \n%@", [error description]);
-                 }
-            }];
+            [self findNewDaysArtists];
         }
-        
     }
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
 #pragma mark - CoreData Related Methods
 - (NSArray *)getTodaysArtists
 {
@@ -219,6 +210,8 @@
         
         [_todaysArtists addObject:temp];
         [TWLDailyArtists createDailyArtistWithInfo:temp];
+        
+        [TWLShownArtists createDailyArtistWithArtistIdentifier:artist.identifier];
     }
 }
 
@@ -281,15 +274,24 @@
      }];
 }
 
-- (void)decideTodaysArtists
+- (void)populateNotShownArtists: (void (^)(void))callbackBlock
 {
-    NSSortDescriptor *sortByPopularity = [NSSortDescriptor sortDescriptorWithKey:@"popularity" ascending:NO];
-    [_relatedArtists sortUsingDescriptors:[NSArray arrayWithObject:sortByPopularity]];
-    _todaysArtists = [NSMutableArray arrayWithArray:[_relatedArtists subarrayWithRange:NSMakeRange(0, 5)]];
-    [self saveTodaysArtists];
-    [self sendArtistsToTheExtension];
-    [self showTodaysArtists];
-    [self getArtistBiosWithArtistIndex:0];
+    SPTArtist *newRootArtist = [_notShownArtists objectAtIndex:0];
+    [self getRelatedArtistsOfRootArtist:newRootArtist callback:^{
+        [_notShownArtists addObjectsFromArray:_relatedArtists];
+        [self findNotShownRelatedArtists];
+        if (5>[_notShownArtists count])
+        {
+            [self populateNotShownArtists:nil];
+        }
+        else
+        {
+            if(callbackBlock)
+            {
+                callbackBlock();
+            }
+        }
+    }];
 }
 
 #pragma mark - UI Related Methods
@@ -305,16 +307,20 @@
 
 - (NSString *)trimBioFromText: (NSString *)text
 {
-    NSArray *sentences = [text componentsSeparatedByString:@". "];
     NSString *trimmedBio = @"";
-    if ([sentences count] >= 2)
+
+    NSMutableArray *results = [NSMutableArray array];
+    
+    [text enumerateSubstringsInRange:NSMakeRange(0, [text length]) options:NSStringEnumerationBySentences usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+        [results addObject:substring];
+    }];
+    int step = 0;
+    while ([trimmedBio length] <= 120 && [results count] > step)
     {
-        trimmedBio = [NSString stringWithFormat:@"%@. %@.",[sentences objectAtIndex:0],[sentences objectAtIndex:1]];
+        trimmedBio = [trimmedBio stringByAppendingFormat:@"%@",[results objectAtIndex:step]];
+        step++;
     }
-    else if([sentences count] >=1 )
-    {
-        trimmedBio = [NSString stringWithFormat:@"%@.",[sentences objectAtIndex:0]];
-    }
+    
     return trimmedBio;
 }
 
@@ -389,6 +395,9 @@
 
 - (void)showErrorMessageWithMessage: (NSString *)message
 {
+    [_photoActivityIndicator stopAnimating];
+    [_activityIndicator stopAnimating];
+    [_biographyActivityIndicator stopAnimating];
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
                                                         message:message
                                                        delegate:self
@@ -508,7 +517,7 @@
 }
 
 - (IBAction)nextArtist:(id)sender {
-    if (_currentArtist == 4)
+    if (_currentArtist == [_todaysArtists count]-1)
     {
         _currentArtist = 0;
     }
@@ -523,7 +532,7 @@
 {
     if (_currentArtist == 0)
     {
-        _currentArtist = 4;
+        _currentArtist = [_todaysArtists count]-1;
     }
     else
     {
@@ -540,7 +549,7 @@
     
     NSInteger dayOfNow = [componentsForNow day];
     NSInteger dayOfData = [componentsOfData day];
-    
+
     if ( dayOfData != dayOfNow)
     {
         return NO;
@@ -549,6 +558,80 @@
     {
         return YES;
     }
+}
+
+- (void)decideTodaysArtists
+{
+    [self findNotShownRelatedArtists];
+    NSLog(@"Not shown artists: %@", _notShownArtists);
+    if (5 > [_notShownArtists count])
+    {
+        [self populateNotShownArtists:^{
+            [self finalizeTodaysArtists];
+        }];
+    }
+    else
+    {
+        [self finalizeTodaysArtists];
+    }
+}
+
+- (void)finalizeTodaysArtists
+{
+    NSSortDescriptor *sortByPopularity = [NSSortDescriptor sortDescriptorWithKey:@"popularity" ascending:NO];
+    [_notShownArtists sortUsingDescriptors:[NSArray arrayWithObject:sortByPopularity]];
+    _todaysArtists = [NSMutableArray arrayWithArray:[_notShownArtists subarrayWithRange:NSMakeRange(0, 5)]];
+    [self saveTodaysArtists];
+    [self sendArtistsToTheExtension];
+    [self showTodaysArtists];
+    [self getArtistBiosWithArtistIndex:0];
+}
+
+- (void)findNotShownRelatedArtists
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ShownArtists"];
+    NSError *error;
+    request.sortDescriptors = nil;
+    
+    for (int i=0; i<[_relatedArtists count]; i++)
+    {
+        request.predicate = [NSPredicate predicateWithFormat:@"artistIdentifier = %@", [[_relatedArtists objectAtIndex:i] valueForKey:@"identifier"] ];
+        NSArray *matches = [[NSArray alloc] initWithArray:[_coreDataStack.context executeFetchRequest:request error:&error]];
+        
+        if (!error && ![matches count])
+        {
+            [_notShownArtists addObject:[_relatedArtists objectAtIndex:i]];
+        }
+    }
+}
+
+- (void)findNewDaysArtists
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DailyArtists"];
+    
+    fetchRequest.fetchLimit = 1;
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"popularity" ascending:YES]];
+    
+    NSError *error = nil;
+    
+    TWLDailyArtists *fetchedMostPopularArtist = [[_coreDataStack context] executeFetchRequest:fetchRequest error:&error].lastObject;
+    NSLog(@"%@",fetchedMostPopularArtist);
+    [SPTArtist artistWithURI:[NSURL URLWithString:fetchedMostPopularArtist.uri] session:_session callback:^(NSError *error, SPTArtist *artist)
+     {
+         if (!error)
+         {
+             [self getRelatedArtistsOfRootArtist:artist callback:^{
+                 [self deleteTodaysArtists];
+                 [self decideTodaysArtists];
+             }];
+         }
+         else
+         {
+             
+             [self showErrorMessageWithMessage:@"An error occured while getting your artists. Please try terminating and reopenning the application again."];
+             NSLog(@"Error getting artist object from yesterday's most popular artist. \n%@", [error description]);
+         }
+     }];
 }
 
 @end

@@ -157,7 +157,7 @@
                                             <action selector="listenOnSpotify:" destination="l6R-lM-nxl" eventType="touchUpInside" id="X62-pC-f2a"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymp-u4-kFT">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ymp-u4-kFT">
                                         <rect key="frame" x="50" y="225" width="200" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="Xkg-Hr-qK9"/>
@@ -186,8 +186,7 @@
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wpx-yi-fJW">
                                                 <constraints>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="284" id="H9J-lJ-OPA"/>
-                                                    <constraint firstAttribute="width" constant="284" id="XxM-2d-KsH"/>
+                                                    <constraint firstAttribute="width" constant="284" id="H9J-lJ-OPA"/>
                                                 </constraints>
                                                 <attributedString key="attributedText"/>
                                                 <nil key="highlightedColor"/>

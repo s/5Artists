@@ -68,6 +68,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
     if (![_todaysArtists count])
     {
         [_normalView.subviews setValue:@YES forKey:@"hidden"];
@@ -79,7 +80,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)widgetPerformUpdateWithCompletionHandler:(void (^)(NCUpdateResult))completionHandler {
+- (void)widgetPerformUpdateWithCompletionHandler:(void (^)(NCUpdateResult))completionHandler
+{
     // Perform any setup necessary in order to update the view.
     
     // If an error is encountered, use NCUpdateResultFailed
@@ -97,7 +99,7 @@
 
 #pragma mark - IBActions
 - (IBAction)nextArtist:(id)sender {
-    if (_currentArtist == 4)
+    if (_currentArtist == [_todaysArtists count]-1)
     {
         _currentArtist = 0;
     }
@@ -105,7 +107,6 @@
     {
         _currentArtist++;
     }
-    NSLog(@"Current Artist:%ld", (long)_currentArtist);
     [self updateArtist];
 }
 
@@ -113,13 +114,12 @@
 {
     if (_currentArtist == 0)
     {
-        _currentArtist = 4;
+        _currentArtist = [_todaysArtists count]-1;
     }
     else
     {
         _currentArtist--;
     }
-    NSLog(@"Current Artist:%ld", (long)_currentArtist);
     [self updateArtist];
 }
 
@@ -165,7 +165,6 @@
     {
         [_normalView.subviews setValue:@NO forKey:@"hidden"];
         [_noResultsView setHidden:YES];
-        
     }
     else
     {
