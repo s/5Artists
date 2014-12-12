@@ -25,7 +25,7 @@
 #import "CoreDataStack.h"
 
 @implementation TWLShownArtists (Create)
-+ (void)createDailyArtistWithArtistIdentifier:(NSString *)artistIdentifier
++ (void)createShownArtistWithArtistIdentifier:(NSString *)artistIdentifier
 {
     CoreDataStack *coreDataStack = [CoreDataStack sharedInstance];
     NSManagedObject *object;

@@ -211,7 +211,7 @@
         [_todaysArtists addObject:temp];
         [TWLDailyArtists createDailyArtistWithInfo:temp];
         
-        [TWLShownArtists createDailyArtistWithArtistIdentifier:artist.identifier];
+        [TWLShownArtists createShownArtistWithArtistIdentifier:artist.identifier];
     }
 }
 

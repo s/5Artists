@@ -24,5 +24,5 @@
 #import "TWLShownArtists.h"
 
 @interface TWLShownArtists (Create)
-+ (void)createDailyArtistWithArtistIdentifier: (NSString *)artistIdentifier;
++ (void)createShownArtistWithArtistIdentifier: (NSString *)artistIdentifier;
 @end
