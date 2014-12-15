@@ -23,7 +23,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TWLHomeViewController : UIViewController
+@interface TWLHomeViewController : UIViewController <UIAlertViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) IBOutlet UIView *slideView;

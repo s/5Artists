@@ -217,25 +217,29 @@
 
 - (void)deleteTodaysArtists
 {
-    NSFetchRequest *dailyArtists = [[NSFetchRequest alloc] init];
-    [dailyArtists setEntity:[NSEntityDescription entityForName:@"DailyArtists" inManagedObjectContext:[_coreDataStack context]]];
-    [dailyArtists setIncludesPropertyValues:NO];
-    
-    NSError *error = nil;
-    NSArray *allArtistsFromYesterday = [[_coreDataStack context] executeFetchRequest:dailyArtists error:&error];
-    
-    //error handling goes here
-    for (NSManagedObject *artist in allArtistsFromYesterday)
-    {
-        [[_coreDataStack context] deleteObject:artist];
-    }
+    NSArray *entities = @[@"DailyArtists", @"ShownArtists"];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    [fetchRequest setIncludesPropertyValues:NO];
+
+    NSError *fetchError = nil;
     NSError *saveError = nil;
+    
+    for(NSString *entity in entities)
+    {
+        [fetchRequest setEntity:[NSEntityDescription entityForName:entity inManagedObjectContext:[_coreDataStack context]]];
+        NSArray *allResults = [[_coreDataStack context] executeFetchRequest:fetchRequest error:&fetchError];
+        for (NSManagedObject *artist in allResults)
+        {
+            [[_coreDataStack context] deleteObject:artist];
+        }
+    }
+    
     [[_coreDataStack context] save:&saveError];
+    
     if (saveError)
     {
-        NSLog(@"Error saving after deleting yesterday's artists");
+        NSLog(@"Error saving after deleting yesterday's artists: %@",[saveError description]);
     }
-    //more error handling here
 }
 
 - (void)saveArtistsBiosToDB
@@ -503,17 +507,13 @@
 
 - (IBAction)signOut:(id)sender
 {
-    [self deleteTodaysArtists];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SpotifySession"];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    TWLLoginViewController *loginViewController = (TWLLoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    NSMutableArray *viewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
-    
-    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.towerlabs.fiveartists.TodayExtensionSharingDefaults"];
-    [sharedDefaults removeObjectForKey:@"todaysArtists"];
-    
-    [viewControllers replaceObjectAtIndex:0 withObject:loginViewController];
-    [self.navigationController setViewControllers:viewControllers];
+    UIAlertView *signOutAlertView = [[UIAlertView alloc] initWithTitle:@"Warning!"
+                                                               message:@"Signing out will destroy all the suggestion history. Do you still want to proceed?"
+                                                              delegate:self
+                                                     cancelButtonTitle:@"Cancel "
+                                                     otherButtonTitles:@"Sign Out", nil];
+    signOutAlertView.tag = 22;
+    [signOutAlertView show];
 }
 
 - (IBAction)nextArtist:(id)sender {
@@ -634,4 +634,23 @@
      }];
 }
 
+#pragma mark - UIAlertViewDelegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 22 && buttonIndex == 1)
+    {
+        [self deleteTodaysArtists];
+        
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SpotifySession"];
+        NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.towerlabs.fiveartists.TodayExtensionSharingDefaults"];
+        [sharedDefaults removeObjectForKey:@"todaysArtists"];
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        TWLLoginViewController *loginViewController = (TWLLoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        NSMutableArray *viewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+        
+        [viewControllers replaceObjectAtIndex:0 withObject:loginViewController];
+        [self.navigationController setViewControllers:viewControllers];
+    }
+}
 @end
