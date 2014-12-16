@@ -67,7 +67,10 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     return YES;
 }
-
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ApplicationDidBecomeActive" object:self];
+}
 - (void)renewToken
 {
     id sessionData = [[NSUserDefaults standardUserDefaults] objectForKey:kSessionUserDefaultsKey];

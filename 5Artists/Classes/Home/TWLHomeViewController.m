@@ -67,6 +67,7 @@
 
 //Current index for image slider
 @property (nonatomic) NSInteger currentArtist;
+@property (nonatomic) BOOL isNotificationActive;
 
 @property (nonatomic, strong) NSMutableArray *notShownArtists;
 
@@ -83,7 +84,9 @@
     self.session = sessionData ? [NSKeyedUnarchiver unarchiveObjectWithData:sessionData] : nil;
     self.currentArtist = 0;
     self.coreDataStack = [CoreDataStack sharedInstance];
+    
     self.todaysArtists = [[NSMutableArray alloc] initWithArray:[self getTodaysArtists]];
+    
     self.artistBios = [[NSMutableArray alloc] init];
     self.notShownArtists = [[NSMutableArray alloc] init];
     
@@ -100,70 +103,13 @@
     self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0.0f, 0.5f);
     self.navigationController.navigationBar.layer.shadowRadius = 2.0f;
     self.navigationController.navigationBar.layer.shadowOpacity = 1.0f;
-    
-    if(![_todaysArtists count])
-    {
-        [SPTRequest savedTracksForUserInSession:_session callback:^(NSError *error, SPTListPage *listPage) {
-            if (!error)
-            {
-                if (listPage.items.count)
-                {
 
-                    int randomNumberForTrack = arc4random() % listPage.items.count;
-                    
-                    //Choosing a random track from saved tracks list
-                    SPTSavedTrack *track = [listPage.items objectAtIndex:randomNumberForTrack];
-                    
-                    //Getting the partial root artist
-                    SPTPartialArtist *rootArtist = [[track artists] objectAtIndex:0];
-                    
-                    //Getting the real root artist
-                    [SPTRequest requestItemFromPartialObject:rootArtist withSession:_session callback:^(NSError *error, SPTArtist *artist)
-                     {
-                         if (!error)
-                         {
-                             NSLog(@"Root artist decided: %@", artist);
-                             [self getRelatedArtistsOfRootArtist: artist callback:^{
-                                 [self decideTodaysArtists];
-                             }];
-                         }
-                         else
-                         {
-                             [self showErrorMessageWithMessage:@"An error occured while getting your trakcs. Please log out and try again."];
-                             NSLog(@"Error deciding root artist from user saved tracks. \n %@", [error description]);
-                         }
-                     }];
-                }
-                else
-                {
-                    [self showErrorMessageWithMessage:@"No saved tracks found on your account. Please save some tracks and try again."];
-                    NSLog(@"Error getting root artist from pre-defined choice. \n%@", [error description]);
-                }
-            }
-            else
-            {
-                [self showErrorMessageWithMessage:@"An error occured while getting your artists. Please log out and try again."];
-                NSLog(@"Error getting saved tracks of user. \n%@", [error description]);
-            }
-        }];
-                     
-    }
-    else
-    {
-        BOOL isTodaysDataValid = [self isTodaysDataValid];
-        
-        if (isTodaysDataValid)
-        {
-            NSLog(@"Data valid");
-            [self showTodaysArtists];
-            [self sendArtistsToTheExtension];
-        }
-        else
-        {
-            NSLog(@"Data is not valid");
-            [self findNewDaysArtists];
-        }
-    }
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleDataWithNotification)
+                                                 name:@"ApplicationDidBecomeActive"
+                                               object:nil];
+    [self handleData];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -195,9 +141,8 @@
 - (void)saveTodaysArtists
 {
     NSMutableDictionary *temp;
-    NSMutableArray *tempTodaysArtists = [[NSMutableArray alloc] initWithArray:_todaysArtists];
-    _todaysArtists = [[NSMutableArray alloc] init];
-    for (SPTArtist *artist in tempTodaysArtists)
+    
+    for (SPTArtist *artist in _todaysArtists)
     {
         temp = [[NSMutableDictionary alloc] init];
         [temp setValue:artist.name forKey:@"name"];
@@ -208,37 +153,32 @@
         [temp setValue:[NSNumber numberWithFloat:artist.popularity] forKey:@"popularity"];
         [temp setValue:[NSDate date] forKey:@"date"];
         
-        [_todaysArtists addObject:temp];
         [TWLDailyArtists createDailyArtistWithInfo:temp];
-        
         [TWLShownArtists createShownArtistWithArtistIdentifier:artist.identifier];
     }
+    
+    _todaysArtists = [[NSMutableArray alloc] initWithArray:[self getTodaysArtists]];
+    
 }
 
 - (void)deleteTodaysArtists
 {
-    NSArray *entities = @[@"DailyArtists", @"ShownArtists"];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    [fetchRequest setIncludesPropertyValues:NO];
-
-    NSError *fetchError = nil;
-    NSError *saveError = nil;
+    NSFetchRequest *dailyArtists = [[NSFetchRequest alloc] init];
+    [dailyArtists setEntity:[NSEntityDescription entityForName:@"DailyArtists" inManagedObjectContext:[_coreDataStack context]]];
+    [dailyArtists setIncludesPropertyValues:NO];
     
-    for(NSString *entity in entities)
+    NSError *error = nil;
+    NSArray *allArtistsFromYesterday = [[_coreDataStack context] executeFetchRequest:dailyArtists error:&error];
+    
+    for (NSManagedObject *artist in allArtistsFromYesterday)
     {
-        [fetchRequest setEntity:[NSEntityDescription entityForName:entity inManagedObjectContext:[_coreDataStack context]]];
-        NSArray *allResults = [[_coreDataStack context] executeFetchRequest:fetchRequest error:&fetchError];
-        for (NSManagedObject *artist in allResults)
-        {
-            [[_coreDataStack context] deleteObject:artist];
-        }
+        [[_coreDataStack context] deleteObject:artist];
     }
-    
+    NSError *saveError = nil;
     [[_coreDataStack context] save:&saveError];
-    
     if (saveError)
     {
-        NSLog(@"Error saving after deleting yesterday's artists: %@",[saveError description]);
+        NSLog(@"Error saving the context after deleting yesterday's artists");
     }
 }
 
@@ -420,34 +360,35 @@
     NSData *encodedObject;
     NSMutableArray *todaysArtistWithEncodable = [[NSMutableArray alloc] init];
     
-    if ([[_todaysArtists objectAtIndex:0] isKindOfClass:[TWLDailyArtists class]])
+    for(TWLDailyArtists *artist in _todaysArtists)
     {
-        for(TWLDailyArtists *artist in _todaysArtists)
-        {
-            NSArray *keys = [[[artist entity] attributesByName] allKeys];
-            NSDictionary *artistDict = [artist dictionaryWithValuesForKeys:keys];
-            [todaysArtistWithEncodable addObject:artistDict];
-        }
-        encodedObject = [NSKeyedArchiver archivedDataWithRootObject:todaysArtistWithEncodable];
+
+        NSArray *keys = [[[artist entity] attributesByName] allKeys];
+        NSDictionary *artistDict = [artist dictionaryWithValuesForKeys:keys];
+        [todaysArtistWithEncodable addObject:artistDict];
     }
-    else
-    {
-        encodedObject = [NSKeyedArchiver archivedDataWithRootObject:_todaysArtists];
-    }
+    encodedObject = [NSKeyedArchiver archivedDataWithRootObject:todaysArtistWithEncodable];
     
     [sharedDefaults setObject:encodedObject forKey:@"todaysArtists"];
     [sharedDefaults synchronize];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSUserDefaultsDidChangeNotification object:self];
 }
 
 #pragma mark - EchoNest API methods
 
 - (void)getArtistBiosWithArtistIndex: (int)index
 {
-    if (nil != [[_todaysArtists objectAtIndex:0] valueForKey:@"biography"])
+    NSLog(@"Notification: %d", _isNotificationActive);
+    //if (1 && 0)
+    if (nil != [[_todaysArtists objectAtIndex:0] valueForKey:@"biography"] && _isNotificationActive == NO)
     {
         return;
+    }
+    else
+    {
+        if (index == 0)
+        {
+            _artistBios = [[NSMutableArray alloc] init];
+        }
     }
     NSString *apiCallURL = [[CredentialManager sharedInstance] getValueForKey:@"echoNestAPIURL"];
     NSString *apiKey = [[CredentialManager sharedInstance] getValueForKey:@"echoNestAPIKey"];
@@ -542,10 +483,82 @@
 }
 
 #pragma mark - Helpers
+- (void)handleDataWithNotification
+{
+    self.isNotificationActive = YES;
+    _relatedArtists = [[NSMutableArray alloc] init];
+    _notShownArtists = [[NSMutableArray alloc] init];
+    [self handleData];
+}
+- (void)handleData
+{
+    if(![_todaysArtists count])
+    {
+        [SPTRequest savedTracksForUserInSession:_session callback:^(NSError *error, SPTListPage *listPage) {
+            if (!error)
+            {
+                if (listPage.items.count)
+                {
+                    
+                    int randomNumberForTrack = arc4random() % listPage.items.count;
+                    
+                    //Choosing a random track from saved tracks list
+                    SPTSavedTrack *track = [listPage.items objectAtIndex:randomNumberForTrack];
+                    
+                    //Getting the partial root artist
+                    SPTPartialArtist *rootArtist = [[track artists] objectAtIndex:0];
+                    
+                    //Getting the real root artist
+                    [SPTRequest requestItemFromPartialObject:rootArtist withSession:_session callback:^(NSError *error, SPTArtist *artist)
+                     {
+                         if (!error)
+                         {
+                             NSLog(@"Root artist decided: %@", artist);
+                             [self getRelatedArtistsOfRootArtist: artist callback:^{
+                                 [self decideTodaysArtists];
+                             }];
+                         }
+                         else
+                         {
+                             [self showErrorMessageWithMessage:@"An error occured while getting your trakcs. Please log out and try again."];
+                             NSLog(@"Error deciding root artist from user saved tracks. \n %@", [error description]);
+                         }
+                     }];
+                }
+                else
+                {
+                    [self showErrorMessageWithMessage:@"No saved tracks found on your account. Please save some tracks and try again."];
+                    NSLog(@"Error getting root artist from pre-defined choice. \n%@", [error description]);
+                }
+            }
+            else
+            {
+                [self showErrorMessageWithMessage:@"An error occured while getting your artists. Please log out and try again."];
+                NSLog(@"Error getting saved tracks of user. \n%@", [error description]);
+            }
+        }];
+        
+    }
+    else
+    {
+        BOOL isTodaysDataValid = [self isTodaysDataValid];
+        
+        if (isTodaysDataValid)
+        {
+            NSLog(@"Data valid");
+            [self showTodaysArtists];
+        }
+        else
+        {
+            NSLog(@"Data is not valid");
+            [self findNewDaysArtists];
+        }
+    }
+}
 - (BOOL)isTodaysDataValid
 {
-    NSDateComponents *componentsForNow = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
-    NSDateComponents *componentsOfData = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[[_todaysArtists objectAtIndex:0] valueForKey:@"date"]];
+    NSDateComponents *componentsForNow = [[NSCalendar currentCalendar] components:NSCalendarUnitDay fromDate:[NSDate date]];
+    NSDateComponents *componentsOfData = [[NSCalendar currentCalendar] components:NSCalendarUnitDay fromDate:[[_todaysArtists objectAtIndex:0] valueForKey:@"date"]];
     
     NSInteger dayOfNow = [componentsForNow day];
     NSInteger dayOfData = [componentsOfData day];
@@ -564,6 +577,7 @@
 {
     [self findNotShownRelatedArtists];
     NSLog(@"Not shown artists: %@", _notShownArtists);
+    
     if (5 > [_notShownArtists count])
     {
         [self populateNotShownArtists:^{
@@ -580,7 +594,9 @@
 {
     NSSortDescriptor *sortByPopularity = [NSSortDescriptor sortDescriptorWithKey:@"popularity" ascending:NO];
     [_notShownArtists sortUsingDescriptors:[NSArray arrayWithObject:sortByPopularity]];
+    
     _todaysArtists = [NSMutableArray arrayWithArray:[_notShownArtists subarrayWithRange:NSMakeRange(0, 5)]];
+    NSLog(@"New todays artists:%@", _todaysArtists);
     [self saveTodaysArtists];
     [self sendArtistsToTheExtension];
     [self showTodaysArtists];
@@ -592,14 +608,17 @@
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ShownArtists"];
     NSError *error;
     request.sortDescriptors = nil;
-    
+    NSLog(@"All Shown artists:%@",[_coreDataStack.context executeFetchRequest:request error:&error]);
     for (int i=0; i<[_relatedArtists count]; i++)
     {
         request.predicate = [NSPredicate predicateWithFormat:@"artistIdentifier = %@", [[_relatedArtists objectAtIndex:i] valueForKey:@"identifier"] ];
-        NSArray *matches = [[NSArray alloc] initWithArray:[_coreDataStack.context executeFetchRequest:request error:&error]];
         
+        NSArray *matches = [[NSArray alloc] initWithArray:[_coreDataStack.context executeFetchRequest:request error:&error]];
+
         if (!error && ![matches count])
         {
+
+            
             [_notShownArtists addObject:[_relatedArtists objectAtIndex:i]];
         }
     }
@@ -616,6 +635,7 @@
     
     TWLDailyArtists *fetchedMostPopularArtist = [[_coreDataStack context] executeFetchRequest:fetchRequest error:&error].lastObject;
     NSLog(@"%@",fetchedMostPopularArtist);
+
     [SPTArtist artistWithURI:[NSURL URLWithString:fetchedMostPopularArtist.uri] session:_session callback:^(NSError *error, SPTArtist *artist)
      {
          if (!error)
@@ -640,6 +660,28 @@
     if (alertView.tag == 22 && buttonIndex == 1)
     {
         [self deleteTodaysArtists];
+        
+        NSFetchRequest *fetchRequestForShownArtists = [[NSFetchRequest alloc] init];
+        [fetchRequestForShownArtists setIncludesPropertyValues:NO];
+        
+        NSError *fetchError = nil;
+        NSError *saveError = nil;
+        
+        [fetchRequestForShownArtists setEntity:[NSEntityDescription entityForName:@"ShownArtists" inManagedObjectContext:[_coreDataStack context]]];
+        NSArray *allResults = [[_coreDataStack context] executeFetchRequest:fetchRequestForShownArtists error:&fetchError];
+        
+        for (NSManagedObject *artist in allResults)
+        {
+            [[_coreDataStack context] deleteObject:artist];
+        }
+        
+        [[_coreDataStack context] save:&saveError];
+        
+        
+        if (saveError)
+        {
+            NSLog(@"Error saving after deleting yesterday's artists: %@",[saveError description]);
+        }
         
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SpotifySession"];
         NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.towerlabs.fiveartists.TodayExtensionSharingDefaults"];

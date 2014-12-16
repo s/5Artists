@@ -38,42 +38,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.currentArtist = 0;
     
     // Define general attributes for the entire text
     _artistPhoto.layer.cornerRadius = _artistPhoto.frame.size.width/2;
     _artistPhoto.clipsToBounds = YES;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(userDefaultsDidChange:)
-                                                 name:NSUserDefaultsDidChangeNotification
-                                               object:nil];
-    
-    
-    [self retrieveTodaysArtists];
-    if ([_todaysArtists count])
-    {
-        [self updateArtist];
-    }
-    else
-    {
-        [_normalView.subviews setValue:@YES forKey:@"hidden"];
-        [_noResultsView setHidden:NO];
-        [_noResultsLabel setHidden:NO];
-    }
-    
-
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    if (![_todaysArtists count])
-    {
-        [_normalView.subviews setValue:@YES forKey:@"hidden"];
-        [_noResultsView setHidden:NO];
-    }
+    [self handleData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,11 +52,7 @@
 }
 - (void)widgetPerformUpdateWithCompletionHandler:(void (^)(NCUpdateResult))completionHandler
 {
-    // Perform any setup necessary in order to update the view.
-    
-    // If an error is encountered, use NCUpdateResultFailed
-    // If there's no update required, use NCUpdateResultNoData
-    // If there's an update, use NCUpdateResultNewData
+    self.currentArtist = 0;
     completionHandler(NCUpdateResultNewData);
 }
 
@@ -158,17 +124,40 @@
     self.todaysArtists = [[NSMutableArray alloc] initWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:encodedObject]];
 }
 
-- (void)userDefaultsDidChange:(NSNotification *)notification
+
+#pragma mark - Helpers
+- (void)handleData
 {
     [self retrieveTodaysArtists];
-    if ([_todaysArtists count])
+    
+    if (![_todaysArtists count])
     {
-        [_normalView.subviews setValue:@NO forKey:@"hidden"];
-        [_noResultsView setHidden:YES];
+        [_normalView.subviews setValue:@YES forKey:@"hidden"];
+        [_noResultsView setHidden:NO];
+        [_noResultsLabel setHidden:NO];
+        [_noResultsLabel setText:@"Please login with Spotify to see suggestions."];
+        [_activityIndicator stopAnimating];
     }
     else
     {
-        NSLog(@"Here");
+        NSDateComponents *componentsForNow = [[NSCalendar currentCalendar] components:NSCalendarUnitDay fromDate:[NSDate date]];
+        NSDateComponents *componentsOfData = [[NSCalendar currentCalendar] components:NSCalendarUnitDay fromDate:[[_todaysArtists objectAtIndex:0] valueForKey:@"date"]];
+        
+        NSInteger dayOfNow = [componentsForNow day];
+        NSInteger dayOfData = [componentsOfData day];
+        
+        if ( dayOfData != dayOfNow)
+        {
+            [_normalView.subviews setValue:@YES forKey:@"hidden"];
+            [_noResultsView setHidden:NO];
+            [_noResultsLabel setHidden:NO];
+            [_activityIndicator stopAnimating];
+            [_noResultsLabel setText:@"Please open the application for today's five."];
+        }
+        else
+        {
+            [self updateArtist];
+        }
     }
 }
 @end
