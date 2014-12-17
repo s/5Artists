@@ -41,7 +41,6 @@
 		F545AF491A33570400E5C5FA /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F545AF481A33570400E5C5FA /* Spotify.framework */; };
 		F545AF4D1A33580B00E5C5FA /* CredentialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F545AF4C1A33580B00E5C5FA /* CredentialManager.m */; };
 		F545AF531A335ACD00E5C5FA /* 5Artists.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F545AF511A335ACD00E5C5FA /* 5Artists.xcdatamodeld */; };
-		F545AF601A33608A00E5C5FA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F545AF5E1A33608A00E5C5FA /* LaunchScreen.xib */; };
 		F545AF611A33608A00E5C5FA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F545AF5F1A33608A00E5C5FA /* Main.storyboard */; };
 		F545AF631A33640A00E5C5FA /* SpotifyKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F545AF621A33640A00E5C5FA /* SpotifyKeys.plist */; };
 		F545AF651A337D6A00E5C5FA /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = F545AF641A337D6A00E5C5FA /* info.png */; };
@@ -149,7 +148,6 @@
 		F545AF4B1A33580B00E5C5FA /* CredentialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CredentialManager.h; path = Classes/CredentialManager/CredentialManager.h; sourceTree = "<group>"; };
 		F545AF4C1A33580B00E5C5FA /* CredentialManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CredentialManager.m; path = Classes/CredentialManager/CredentialManager.m; sourceTree = "<group>"; };
 		F545AF521A335ACD00E5C5FA /* 5Artists.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = 5Artists.xcdatamodel; sourceTree = "<group>"; };
-		F545AF5E1A33608A00E5C5FA /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = "Supporting Files/Base.lproj/LaunchScreen.xib"; sourceTree = "<group>"; };
 		F545AF5F1A33608A00E5C5FA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = "Supporting Files/Base.lproj/Main.storyboard"; sourceTree = "<group>"; };
 		F545AF621A33640A00E5C5FA /* SpotifyKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = SpotifyKeys.plist; path = "Supporting Files/SpotifyKeys.plist"; sourceTree = "<group>"; };
 		F545AF641A337D6A00E5C5FA /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = info.png; path = Assets/Images/info.png; sourceTree = "<group>"; };
@@ -262,7 +260,6 @@
 			isa = PBXGroup;
 			children = (
 				F545AF621A33640A00E5C5FA /* SpotifyKeys.plist */,
-				F545AF5E1A33608A00E5C5FA /* LaunchScreen.xib */,
 				F545AF5F1A33608A00E5C5FA /* Main.storyboard */,
 				F50A91781A27F80300D3146D /* Images.xcassets */,
 				F5B1A3AE1A28198A00359A22 /* 5Artists.entitlements */,
@@ -678,7 +675,6 @@
 				F545AF6C1A337E5900E5C5FA /* exit@2x.png in Resources */,
 				F587E13D1A2E6C5A00803702 /* 5Artists.png in Resources */,
 				F50A91791A27F80300D3146D /* Images.xcassets in Resources */,
-				F545AF601A33608A00E5C5FA /* LaunchScreen.xib in Resources */,
 				F545AF6D1A337E5900E5C5FA /* exit@3x.png in Resources */,
 				F545AF631A33640A00E5C5FA /* SpotifyKeys.plist in Resources */,
 				F545AF691A337E1400E5C5FA /* info@3x.png in Resources */,
@@ -859,6 +855,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "5Artists/Supporting Files/5Artists.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -884,6 +881,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "5Artists/Supporting Files/5Artists.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
