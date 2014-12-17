@@ -16,5 +16,5 @@ Example SpotifyKeys.plist file:<br/>
 Enjoy this playlist while you build my application ♪♪♪ http://open.spotify.com/user/1199967304/playlist/3PxDHvvzjIPc4yP7pxURxb
 
 Screenshots from the application:
-![Screenshot 1](https://raw.githubusercontent.com/s/5Artists/master/ss1.png)
-![Screenshot 2](https://raw.githubusercontent.com/s/5Artists/master/ss2.png)
+![Screenshot 1](https://raw.githubusercontent.com/s/5Artists/master/ss1.png =200x)
+![Screenshot 2](https://raw.githubusercontent.com/s/5Artists/master/ss2.png =200x)
