@@ -21,9 +21,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
                                 <subviews>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please login with Spotify to see suggestions" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOU-Ys-OlN">
-                                        <rect key="frame" x="60" y="172" width="200" height="56"/>
+                                        <rect key="frame" x="60" y="172" width="200" height="75"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="56" id="7cb-TN-0Eg"/>
+                                            <constraint firstAttribute="height" constant="75" id="7cb-TN-0Eg"/>
                                             <constraint firstAttribute="width" constant="200" id="MQA-pK-o1p"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
@@ -34,7 +34,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="NOU-Ys-OlN" secondAttribute="centerX" id="bFf-R7-MqF"/>
-                                    <constraint firstAttribute="centerY" secondItem="NOU-Ys-OlN" secondAttribute="centerY" id="mEn-GY-kAP"/>
+                                    <constraint firstAttribute="centerY" secondItem="NOU-Ys-OlN" secondAttribute="centerY" constant="-9.5" id="mEn-GY-kAP"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EIk-1E-uBK">

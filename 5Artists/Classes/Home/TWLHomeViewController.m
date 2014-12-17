@@ -80,6 +80,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     id sessionData = [[NSUserDefaults standardUserDefaults] objectForKey:@"SpotifySession"];
     self.session = sessionData ? [NSKeyedUnarchiver unarchiveObjectWithData:sessionData] : nil;
     self.currentArtist = 0;
@@ -377,8 +378,6 @@
 
 - (void)getArtistBiosWithArtistIndex: (int)index
 {
-    NSLog(@"Notification: %d", _isNotificationActive);
-    //if (1 && 0)
     if (nil != [[_todaysArtists objectAtIndex:0] valueForKey:@"biography"] && _isNotificationActive == NO)
     {
         return;

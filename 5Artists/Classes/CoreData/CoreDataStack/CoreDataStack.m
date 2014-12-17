@@ -70,9 +70,6 @@
         
         if (!_store) {
             NSLog(@"Error adding persistent store: %@", error.description);
-            #ifdef DEBUG
-                abort();
-            #endif
         }
         
     }

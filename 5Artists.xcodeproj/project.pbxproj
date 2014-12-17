@@ -943,10 +943,7 @@
 				CODE_SIGN_ENTITLEMENTS = 5ArtistsExtension/5ArtistsExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=0",
-					AF_APP_EXTENSIONS,
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = AF_APP_EXTENSIONS;
 				INFOPLIST_FILE = 5ArtistsExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				OTHER_LDFLAGS = (
