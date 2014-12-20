@@ -47,18 +47,7 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
     self.coreDataStack = [CoreDataStack sharedInstance];
     self.credentialManager = [CredentialManager sharedInstance];
     
-    if (session)
-    {
-        if ([session isValid])
-        {
-            
-        }
-        else
-        {
-            [self renewToken];
-        }
-    }
-    else
+    if (!session)
     {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         TWLHomeViewController *loginViewController = (TWLHomeViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
@@ -70,36 +59,6 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ApplicationDidBecomeActive" object:self];
-}
-- (void)renewToken
-{
-    id sessionData = [[NSUserDefaults standardUserDefaults] objectForKey:kSessionUserDefaultsKey];
-    SPTSession *session = sessionData ? [NSKeyedUnarchiver unarchiveObjectWithData:sessionData] : nil;
-    SPTAuth *auth = [SPTAuth defaultInstance];
-    
-    NSString *tokenRefreshServiceURL = [_credentialManager getValueForKey:@"tokenRefresh"];
-    [auth renewSession:session withServiceEndpointAtURL:[NSURL URLWithString:tokenRefreshServiceURL] callback:^(NSError *error, SPTSession *session) {
-    
-        if (error)
-        {
-            NSLog(@"*** Error renewing session: %@", error);
-            return;
-        }
-        else
-        {
-            NSData *sessionData = [NSKeyedArchiver archivedDataWithRootObject:session];
-            [[NSUserDefaults standardUserDefaults] setObject:sessionData forKey:kSessionUserDefaultsKey];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-           // [self presentHomeViewController];
-        }
-    }];
-}
-
-- (void)presentHomeViewController
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    TWLHomeViewController *homeViewController = (TWLHomeViewController *)[storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
-    [self.window.rootViewController presentViewController:homeViewController animated:NO completion:nil];
 }
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {

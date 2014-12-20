@@ -873,7 +873,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dc9b5ae4-c0ab-43db-a40c-94f5a449e6d8";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -883,8 +883,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "5Artists/Supporting Files/5Artists.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tower Labs. (9JJNZLTAH9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tower Labs. (9JJNZLTAH9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/5Artists",
@@ -898,7 +898,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dc9b5ae4-c0ab-43db-a40c-94f5a449e6d8";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -950,7 +950,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e0f6028d-471e-4be7-9e4a-bbf207b92475";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -959,8 +959,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = 5ArtistsExtension/5ArtistsExtension.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tower Labs. (9JJNZLTAH9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tower Labs. (9JJNZLTAH9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = AF_APP_EXTENSIONS;
 				INFOPLIST_FILE = 5ArtistsExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -969,7 +969,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e0f6028d-471e-4be7-9e4a-bbf207b92475";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;

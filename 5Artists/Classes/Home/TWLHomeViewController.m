@@ -49,6 +49,9 @@
 
 @interface TWLHomeViewController ()
 
+//Credential Manager
+@property (nonatomic, strong) CredentialManager *credentialManager;
+
 //Core Data Stack
 
 @property (nonatomic, strong) CoreDataStack *coreDataStack;
@@ -67,11 +70,14 @@
 
 //Current index for image slider
 @property (nonatomic) NSInteger currentArtist;
-@property (nonatomic) BOOL isNotificationActive;
 
 @property (nonatomic, strong) NSMutableArray *notShownArtists;
 
+@property (nonatomic) BOOL isNotificationActive;
+
 @end
+
+static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
 
 @implementation TWLHomeViewController
 
@@ -84,10 +90,11 @@
     id sessionData = [[NSUserDefaults standardUserDefaults] objectForKey:@"SpotifySession"];
     self.session = sessionData ? [NSKeyedUnarchiver unarchiveObjectWithData:sessionData] : nil;
     self.currentArtist = 0;
+    
     self.coreDataStack = [CoreDataStack sharedInstance];
+    self.credentialManager = [CredentialManager sharedInstance];
     
     self.todaysArtists = [[NSMutableArray alloc] initWithArray:[self getTodaysArtists]];
-    
     self.artistBios = [[NSMutableArray alloc] init];
     self.notShownArtists = [[NSMutableArray alloc] init];
     
@@ -109,8 +116,18 @@
                                              selector:@selector(handleDataWithNotification)
                                                  name:@"ApplicationDidBecomeActive"
                                                object:nil];
-    [self handleData];
-    
+
+    if ([_session isValid])
+    {
+        NSLog(@"Session valid, will handle data");
+        [self handleData];
+    }
+    else
+    {
+        NSLog(@"Will renew token.");
+        [self clearUserInterface];
+        [self renewToken];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -389,8 +406,8 @@
             _artistBios = [[NSMutableArray alloc] init];
         }
     }
-    NSString *apiCallURL = [[CredentialManager sharedInstance] getValueForKey:@"echoNestAPIURL"];
-    NSString *apiKey = [[CredentialManager sharedInstance] getValueForKey:@"echoNestAPIKey"];
+    NSString *apiCallURL = [_credentialManager getValueForKey:@"echoNestAPIURL"];
+    NSString *apiKey = [_credentialManager getValueForKey:@"echoNestAPIKey"];
     NSString *artistName = [[_todaysArtists objectAtIndex:index] valueForKey:@"name"];
     
     NSDictionary *parameters = @{
@@ -482,17 +499,60 @@
 }
 
 #pragma mark - Helpers
+- (void)clearUserInterface
+{
+    [_artistPhoto setImage:nil];
+    [[self.view subviews] setValue:@NO forKey:@"hidden"];
+    [_artistNameAndListenerCount setText:@"Loading.."];
+    [_artistBiography setText:@""];
+    [_activityIndicator startAnimating];
+    [_photoActivityIndicator startAnimating];
+    [_biographyActivityIndicator startAnimating];
+}
+- (void)renewToken
+{
+    SPTAuth *auth = [SPTAuth defaultInstance];
+    
+    NSString *tokenRefreshServiceURL = [_credentialManager getValueForKey:@"tokenRefresh"];
+    [auth renewSession:_session withServiceEndpointAtURL:[NSURL URLWithString:tokenRefreshServiceURL] callback:^(NSError *error, SPTSession *session) {
+        
+        if (error)
+        {
+            NSLog(@"*** Error renewing session: %@", error);
+            [self showErrorMessageWithMessage:@"An error occured while renewing your session. Please try terminating and reopenning application again."];
+            return;
+        }
+        else
+        {
+            NSLog(@"Did renew token");
+            NSData *sessionData = [NSKeyedArchiver archivedDataWithRootObject:session];
+            [[NSUserDefaults standardUserDefaults] setObject:sessionData forKey:kSessionUserDefaultsKey];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self handleData];
+        }
+    }];
+}
 - (void)handleDataWithNotification
 {
-    self.isNotificationActive = YES;
-    _relatedArtists = [[NSMutableArray alloc] init];
-    _notShownArtists = [[NSMutableArray alloc] init];
-    [self handleData];
+    NSLog(@"Session status:%d", [_session isValid]);
+    if (![_session isValid])
+    {
+        [self clearUserInterface];
+        [self renewToken];
+    }
+    else
+    {
+        self.isNotificationActive = YES;
+        _relatedArtists = [[NSMutableArray alloc] init];
+        _notShownArtists = [[NSMutableArray alloc] init];
+        [self handleData];
+    }
 }
 - (void)handleData
 {
     if(![_todaysArtists count])
     {
+        NSLog(@"There is no data");
         [SPTRequest savedTracksForUserInSession:_session callback:^(NSError *error, SPTListPage *listPage) {
             if (!error)
             {
@@ -575,7 +635,7 @@
 - (void)decideTodaysArtists
 {
     [self findNotShownRelatedArtists];
-    NSLog(@"Not shown artists: %@", _notShownArtists);
+    //NSLog(@"Not shown artists: %@", _notShownArtists);
     
     if (5 > [_notShownArtists count])
     {
@@ -595,7 +655,7 @@
     [_notShownArtists sortUsingDescriptors:[NSArray arrayWithObject:sortByPopularity]];
     
     _todaysArtists = [NSMutableArray arrayWithArray:[_notShownArtists subarrayWithRange:NSMakeRange(0, 5)]];
-    NSLog(@"New todays artists:%@", _todaysArtists);
+    //NSLog(@"New todays artists:%@", _todaysArtists);
     [self saveTodaysArtists];
     [self sendArtistsToTheExtension];
     [self showTodaysArtists];
@@ -607,7 +667,7 @@
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ShownArtists"];
     NSError *error;
     request.sortDescriptors = nil;
-    NSLog(@"All Shown artists:%@",[_coreDataStack.context executeFetchRequest:request error:&error]);
+    //NSLog(@"All Shown artists:%@",[_coreDataStack.context executeFetchRequest:request error:&error]);
     for (int i=0; i<[_relatedArtists count]; i++)
     {
         request.predicate = [NSPredicate predicateWithFormat:@"artistIdentifier = %@", [[_relatedArtists objectAtIndex:i] valueForKey:@"identifier"] ];
@@ -633,7 +693,7 @@
     NSError *error = nil;
     
     TWLDailyArtists *fetchedMostPopularArtist = [[_coreDataStack context] executeFetchRequest:fetchRequest error:&error].lastObject;
-    NSLog(@"%@",fetchedMostPopularArtist);
+    //NSLog(@"%@",fetchedMostPopularArtist);
 
     [SPTArtist artistWithURI:[NSURL URLWithString:fetchedMostPopularArtist.uri] session:_session callback:^(NSError *error, SPTArtist *artist)
      {
