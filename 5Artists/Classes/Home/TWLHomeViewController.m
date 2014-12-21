@@ -175,6 +175,8 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
         [TWLShownArtists createShownArtistWithArtistIdentifier:artist.identifier];
     }
     
+    
+    
     _todaysArtists = [[NSMutableArray alloc] initWithArray:[self getTodaysArtists]];
     
 }
@@ -528,6 +530,7 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
             NSData *sessionData = [NSKeyedArchiver archivedDataWithRootObject:session];
             [[NSUserDefaults standardUserDefaults] setObject:sessionData forKey:kSessionUserDefaultsKey];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            self.session = session;
             [self handleData];
         }
     }];
@@ -544,7 +547,6 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
     {
         self.isNotificationActive = YES;
         _relatedArtists = [[NSMutableArray alloc] init];
-        _notShownArtists = [[NSMutableArray alloc] init];
         [self handleData];
     }
 }
@@ -635,7 +637,7 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
 - (void)decideTodaysArtists
 {
     [self findNotShownRelatedArtists];
-    //NSLog(@"Not shown artists: %@", _notShownArtists);
+    NSLog(@"Not shown artists: %@", _notShownArtists);
     
     if (5 > [_notShownArtists count])
     {
@@ -655,7 +657,7 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
     [_notShownArtists sortUsingDescriptors:[NSArray arrayWithObject:sortByPopularity]];
     
     _todaysArtists = [NSMutableArray arrayWithArray:[_notShownArtists subarrayWithRange:NSMakeRange(0, 5)]];
-    //NSLog(@"New todays artists:%@", _todaysArtists);
+    NSLog(@"New todays artists:%@", _todaysArtists);
     [self saveTodaysArtists];
     [self sendArtistsToTheExtension];
     [self showTodaysArtists];
@@ -664,20 +666,17 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
 
 - (void)findNotShownRelatedArtists
 {
+    _notShownArtists = [[NSMutableArray alloc] init];
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ShownArtists"];
     NSError *error;
     request.sortDescriptors = nil;
-    //NSLog(@"All Shown artists:%@",[_coreDataStack.context executeFetchRequest:request error:&error]);
+  
     for (int i=0; i<[_relatedArtists count]; i++)
     {
         request.predicate = [NSPredicate predicateWithFormat:@"artistIdentifier = %@", [[_relatedArtists objectAtIndex:i] valueForKey:@"identifier"] ];
-        
         NSArray *matches = [[NSArray alloc] initWithArray:[_coreDataStack.context executeFetchRequest:request error:&error]];
-
         if (!error && ![matches count])
         {
-
-            
             [_notShownArtists addObject:[_relatedArtists objectAtIndex:i]];
         }
     }
