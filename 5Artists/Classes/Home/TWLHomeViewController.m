@@ -624,6 +624,10 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
                     [self findNewDaysArtists];
                 }];
             }
+            else
+            {
+                [self findNewDaysArtists];
+            }
         }
     }
 }
