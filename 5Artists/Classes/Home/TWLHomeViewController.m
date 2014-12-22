@@ -117,17 +117,7 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
                                                  name:@"ApplicationDidBecomeActive"
                                                object:nil];
 
-    if ([_session isValid])
-    {
-        NSLog(@"Session valid, will handle data");
-        [self handleData];
-    }
-    else
-    {
-        NSLog(@"Will renew token.");
-        [self clearUserInterface];
-        [self renewToken];
-    }
+    [self handleData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -519,7 +509,7 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
     [_photoActivityIndicator startAnimating];
     [_biographyActivityIndicator startAnimating];
 }
-- (void)renewToken
+- (void)renewToken: (void (^)(void))callbackBlock
 {
     SPTAuth *auth = [SPTAuth defaultInstance];
     
@@ -539,74 +529,82 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
             [[NSUserDefaults standardUserDefaults] setObject:sessionData forKey:kSessionUserDefaultsKey];
             [[NSUserDefaults standardUserDefaults] synchronize];
             self.session = session;
-            [self handleData];
+            if(callbackBlock)
+            {
+                callbackBlock();
+            }
         }
     }];
 }
 - (void)handleDataWithNotification
 {
-    NSLog(@"Session status:%d", [_session isValid]);
-    if (![_session isValid])
-    {
-        [self clearUserInterface];
-        [self renewToken];
-    }
-    else
-    {
-        self.isNotificationActive = YES;
-        _relatedArtists = [[NSMutableArray alloc] init];
-        [self handleData];
-    }
+    self.isNotificationActive = YES;
+    _relatedArtists = [[NSMutableArray alloc] init];
+    [self handleData];
 }
+
+- (void)getSavedTracksOfUser
+{
+    [SPTRequest savedTracksForUserInSession:_session callback:^(NSError *error, SPTListPage *listPage) {
+        if (!error)
+        {
+            if (listPage.items.count)
+            {
+                
+                int randomNumberForTrack = arc4random() % listPage.items.count;
+                
+                //Choosing a random track from saved tracks list
+                SPTSavedTrack *track = [listPage.items objectAtIndex:randomNumberForTrack];
+                
+                //Getting the partial root artist
+                SPTPartialArtist *rootArtist = [[track artists] objectAtIndex:0];
+                
+                //Getting the real root artist
+                [SPTRequest requestItemFromPartialObject:rootArtist withSession:_session callback:^(NSError *error, SPTArtist *artist)
+                 {
+                     if (!error)
+                     {
+                         NSLog(@"Root artist decided: %@", artist);
+                         [self getRelatedArtistsOfRootArtist: artist callback:^{
+                             [self decideTodaysArtists];
+                         }];
+                     }
+                     else
+                     {
+                         [self showErrorMessageWithMessage:@"An error occured while getting your trakcs. Please log out and try again."];
+                         NSLog(@"Error deciding root artist from user saved tracks. \n %@", [error description]);
+                     }
+                 }];
+            }
+            else
+            {
+                [self showErrorMessageWithMessage:@"No saved tracks found on your account. Please save some tracks and try again."];
+                NSLog(@"Error getting root artist from pre-defined choice. \n%@", [error description]);
+            }
+        }
+        else
+        {
+            [self showErrorMessageWithMessage:@"An error occured while getting your artists. Please log out and try again."];
+            NSLog(@"Error getting saved tracks of user. \n%@", [error description]);
+        }
+    }];
+}
+
 - (void)handleData
 {
     if(![_todaysArtists count])
     {
         NSLog(@"There is no data");
-        [SPTRequest savedTracksForUserInSession:_session callback:^(NSError *error, SPTListPage *listPage) {
-            if (!error)
-            {
-                if (listPage.items.count)
-                {
-                    
-                    int randomNumberForTrack = arc4random() % listPage.items.count;
-                    
-                    //Choosing a random track from saved tracks list
-                    SPTSavedTrack *track = [listPage.items objectAtIndex:randomNumberForTrack];
-                    
-                    //Getting the partial root artist
-                    SPTPartialArtist *rootArtist = [[track artists] objectAtIndex:0];
-                    
-                    //Getting the real root artist
-                    [SPTRequest requestItemFromPartialObject:rootArtist withSession:_session callback:^(NSError *error, SPTArtist *artist)
-                     {
-                         if (!error)
-                         {
-                             NSLog(@"Root artist decided: %@", artist);
-                             [self getRelatedArtistsOfRootArtist: artist callback:^{
-                                 [self decideTodaysArtists];
-                             }];
-                         }
-                         else
-                         {
-                             [self showErrorMessageWithMessage:@"An error occured while getting your trakcs. Please log out and try again."];
-                             NSLog(@"Error deciding root artist from user saved tracks. \n %@", [error description]);
-                         }
-                     }];
-                }
-                else
-                {
-                    [self showErrorMessageWithMessage:@"No saved tracks found on your account. Please save some tracks and try again."];
-                    NSLog(@"Error getting root artist from pre-defined choice. \n%@", [error description]);
-                }
-            }
-            else
-            {
-                [self showErrorMessageWithMessage:@"An error occured while getting your artists. Please log out and try again."];
-                NSLog(@"Error getting saved tracks of user. \n%@", [error description]);
-            }
-        }];
-        
+        if (![_session isValid])
+        {
+            [self renewToken:^{
+                [self getSavedTracksOfUser];
+            }];
+        }
+        else
+        {
+            [self getSavedTracksOfUser];
+        }
     }
     else
     {
@@ -620,7 +618,12 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
         else
         {
             NSLog(@"Data is not valid");
-            [self findNewDaysArtists];
+            if (![_session isValid])
+            {
+                [self renewToken:^{
+                    [self findNewDaysArtists];
+                }];
+            }
         }
     }
 }
@@ -700,8 +703,7 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
     NSError *error = nil;
     
     TWLDailyArtists *fetchedMostPopularArtist = [[_coreDataStack context] executeFetchRequest:fetchRequest error:&error].lastObject;
-    NSLog(@"is artist uri:%d",[SPTArtist isArtistURI:[NSURL URLWithString:fetchedMostPopularArtist.uri]]);
-    
+
     [SPTArtist artistWithURI:[NSURL URLWithString:fetchedMostPopularArtist.uri] session:nil callback:^(NSError *error, SPTArtist *artist)
      {
          if (!error)
