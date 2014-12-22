@@ -240,7 +240,15 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
 
 - (void)populateNotShownArtists: (void (^)(void))callbackBlock
 {
-    SPTArtist *newRootArtist = [_notShownArtists objectAtIndex:0];
+    SPTArtist *newRootArtist;
+    if ([_notShownArtists count])
+    {
+        newRootArtist = [_notShownArtists objectAtIndex:0];
+    }
+    else
+    {
+        newRootArtist = [_relatedArtists objectAtIndex:0];
+    }
     [self getRelatedArtistsOfRootArtist:newRootArtist callback:^{
         [_notShownArtists addObjectsFromArray:_relatedArtists];
         [self findNotShownRelatedArtists];
@@ -692,9 +700,9 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
     NSError *error = nil;
     
     TWLDailyArtists *fetchedMostPopularArtist = [[_coreDataStack context] executeFetchRequest:fetchRequest error:&error].lastObject;
-    //NSLog(@"%@",fetchedMostPopularArtist);
-
-    [SPTArtist artistWithURI:[NSURL URLWithString:fetchedMostPopularArtist.uri] session:_session callback:^(NSError *error, SPTArtist *artist)
+    NSLog(@"is artist uri:%d",[SPTArtist isArtistURI:[NSURL URLWithString:fetchedMostPopularArtist.uri]]);
+    
+    [SPTArtist artistWithURI:[NSURL URLWithString:fetchedMostPopularArtist.uri] session:nil callback:^(NSError *error, SPTArtist *artist)
      {
          if (!error)
          {
@@ -705,7 +713,6 @@ static NSString * const kSessionUserDefaultsKey = @"SpotifySession";
          }
          else
          {
-             
              [self showErrorMessageWithMessage:@"An error occured while getting your artists. Please try terminating and reopenning the application again."];
              NSLog(@"Error getting artist object from yesterday's most popular artist. \n%@", [error description]);
          }
