@@ -89,7 +89,6 @@
     NSError *error = nil;
     if ([self.context hasChanges] && ![self.context save:&error]) {
         NSLog(@"Error saving context: %@", error.userInfo);
-        abort();
     }
     
 }
